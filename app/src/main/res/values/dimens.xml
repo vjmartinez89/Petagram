@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layout_padding">16dp</dimen>
+    <dimen name="sw_layout_height">200dp</dimen>
+    <dimen name="list_height">200dp</dimen>
+    <dimen name="card_width">200dp</dimen>
+    <dimen name="card_height">300dp</dimen>
+    <dimen name="card_corner">4dp</dimen>
+</resources>

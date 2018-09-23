@@ -29,6 +29,7 @@ public class MainActivity extends PetagramActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initFloatingActionButton();
+        initShowPetsButton();
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshMain);
         planetList = (ListView)findViewById(R.id.listViewMain);
         String[] planets = getResources().getStringArray(R.array.planets);

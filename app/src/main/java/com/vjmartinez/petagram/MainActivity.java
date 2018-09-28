@@ -19,33 +19,12 @@ import java.util.Calendar;
 
 public class MainActivity extends PetagramActivity {
 
-    //Global variables
-    SwipeRefreshLayout swipeRefreshLayout;
-    ListView planetList;
-    Adapter adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initFloatingActionButton();
         initShowPetsButton();
-        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshMain);
-        planetList = (ListView)findViewById(R.id.listViewMain);
-        String[] planets = getResources().getStringArray(R.array.planets);
-        planetList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, planets));
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshContent();
-            }
-        });
-    }
-
-    private void refreshContent(){
-        String[] planets = getResources().getStringArray(R.array.planets);
-        planetList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, planets));
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     /**

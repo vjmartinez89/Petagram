@@ -4,13 +4,16 @@
     <string name="see_pets">Ver mascotas</string>
     <string name="favorite_message">Agregado a favoritos</string>
     <string name="favorite_action_text">Deshacer</string>
-    <string-array name="planets">
-        <item>Mercurio</item>
-        <item>Venus</item>
-        <item>Tierra</item>
-        <item>Marte</item>
-        <item>Jupiter</item>
+    <string-array name="pets">
+        <item>Perro</item>
+        <item>Gato</item>
+        <item>Conejo</item>
+        <item>Tortuga</item>
+        <item>Hamster</item>
     </string-array>
     <string name="main_image_title">Android 5.0</string>
     <string name="main_image_description">Esta es la versión en la que se incluyó Material Design. Android Lollipop.</string>
+    <string name="name">Victor Martínez</string>
+    <string name="phone">3145316197</string>
+    <string name="email">vijumaba89@gmail.com</string>
 </resources>

@@ -11,19 +11,7 @@
     <RelativeLayout android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshMain"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sw_layout_height">
-
-            <ListView
-                android:id="@+id/listViewMain"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/list_height">
-            </ListView>
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-        <TextView
+         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

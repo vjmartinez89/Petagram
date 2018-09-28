@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/layout_padding"
+    tools:context=".PetDetailActivity"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/petNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textStyle="bold"
+        android:textSize="@dimen/titleSize"/>
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/rowPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/textMarginTop">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icons8_call_24"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/petTelefono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone"
+            android:layout_marginLeft="@dimen/textMarginLeft"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/rowEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/textMarginTop">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icons8_email_24"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/petEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            android:layout_marginLeft="@dimen/textMarginLeft"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/petEdad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+</LinearLayout>

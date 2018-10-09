@@ -8,72 +8,104 @@
     tools:context=".MainActivity"
     android:background="@color/backgoundColor">
 
-    <RelativeLayout android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-         <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_below="@+id/swipeRefreshMain"/>
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:id="@+id/mainGV">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cvMainPage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTitle"
-            app:cardCornerRadius="@dimen/card_corner">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/mainImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/lollipop_icon"
-                    android:scaleType="centerCrop"/>
-                <TextView
-                    android:id="@+id/mainImgTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/main_image_title"
-                    android:layout_below="@+id/mainImage"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/mainImgDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/main_image_description"
-                    android:layout_below="@+id/mainImgTitle"/>
-            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="@dimen/menuItemWidth"
+                    android:layout_height="@dimen/menuItemHeight"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/basicMargin">
 
-        </android.support.v7.widget.CardView>
+                    <ImageView
+                        android:id="@+id/iconLogin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/cs_login_icon" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/login"
+                        android:gravity="center_horizontal"/>
+                </LinearLayout>
 
-        <Button
-            android:id="@+id/btnMainPage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cvMainPage"
-            android:text="@string/see_pets"
-            android:theme="@style/raisedButton"/>
+                <LinearLayout
+                    android:layout_width="@dimen/menuItemWidth"
+                    android:layout_height="@dimen/menuItemHeight"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/basicMargin">
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/star"
-            android:layout_below="@+id/btnMainPage"
-            android:id="@+id/flaButtonMainPage"
-            android:paddingLeft="@dimen/layout_padding"
-            android:layout_gravity="bottom|right"
-            >
-        </android.support.design.widget.FloatingActionButton>
+                    <ImageView
+                        android:id="@+id/iconSignIn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/evelauncher_icon" />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/singin"
+                        android:gravity="center_horizontal"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <LinearLayout
+                    android:layout_width="@dimen/menuItemWidth"
+                    android:layout_height="@dimen/menuItemHeight"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:layout_margin="@dimen/basicMargin">
+                    <ImageView
+                        android:id="@+id/iconUsersList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/d_feet_icon"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/see_users"
+                        android:gravity="center_horizontal"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/basicMargin"
+                android:src="@drawable/star"
+                android:layout_below="@+id/btnMainPage"
+                android:id="@+id/flaButtonMainPage"
+                android:paddingLeft="@dimen/layout_padding"
+                android:layout_gravity="bottom|right"
+                >
+            </android.support.design.widget.FloatingActionButton>
+        </LinearLayout>
     </RelativeLayout>
+
+
 
 </android.support.design.widget.CoordinatorLayout>

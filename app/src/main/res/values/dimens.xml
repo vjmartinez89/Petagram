@@ -9,4 +9,7 @@
     <dimen name="titleSize">24dp</dimen>
     <dimen name="textMarginTop">15dp</dimen>
     <dimen name="textMarginLeft">8dp</dimen>
+    <dimen name="menuItemWidth">165dp</dimen>
+    <dimen name="menuItemHeight">165dp</dimen>
+    <dimen name="basicMargin">5dp</dimen>
 </resources>

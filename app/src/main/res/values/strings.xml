@@ -1,19 +1,13 @@
 <resources>
     <string name="app_name">Petagram</string>
     <string name="app_title">Bienvenido</string>
-    <string name="see_pets">Ver mascotas</string>
+    <string name="see_users">Ver colaboradores</string>
     <string name="favorite_message">Agregado a favoritos</string>
     <string name="favorite_action_text">Deshacer</string>
-    <string-array name="pets">
-        <item>Perro</item>
-        <item>Gato</item>
-        <item>Conejo</item>
-        <item>Tortuga</item>
-        <item>Hamster</item>
-    </string-array>
-    <string name="main_image_title">Android 5.0</string>
-    <string name="main_image_description">Esta es la versión en la que se incluyó Material Design. Android Lollipop.</string>
-    <string name="name">Victor Martínez</string>
-    <string name="phone">3145316197</string>
-    <string name="email">vijumaba89@gmail.com</string>
+    <string name="exit_confirm_tittle">Salir</string>
+    <string name="exit_confirm">¿Seguro que desea salir?</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="singin">Registrarse</string>
 </resources>

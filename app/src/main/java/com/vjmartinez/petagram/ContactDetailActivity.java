@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class PetDetailActivity extends AppCompatActivity {
+public class ContactDetailActivity extends AppCompatActivity {
 
     TextView textViewName;
     TextView textViewPhone;
@@ -24,7 +24,7 @@ public class PetDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet_detail);
+        setContentView(R.layout.activity_contact_detail);
 
         textViewName = (TextView) findViewById(R.id.petNameText);
         textViewPhone = (TextView) findViewById(R.id.petTelefono);
@@ -89,5 +89,21 @@ public class PetDetailActivity extends AppCompatActivity {
         emailIntent.putExtra(Intent.EXTRA_EMAIL, addressList);
         emailIntent.setType("message/rfc822"); //Set the applicatrion type
         startActivity(Intent.createChooser(emailIntent, "Email"));
+    }
+
+    /**
+     * Go to Pet List Activity when user touch back button
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            Intent intent = new Intent(this, ContactListActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/layout_padding"
-    tools:context=".PetDetailActivity"
+    tools:context=".ContactDetailActivity"
     android:orientation="vertical">
     <TextView
         android:id="@+id/petNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/name"
+        android:text=""
         android:textStyle="bold"
         android:textSize="@dimen/titleSize"/>
 
@@ -30,7 +30,7 @@
             android:id="@+id/petTelefono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/phone"
+            android:text=""
             android:layout_marginLeft="@dimen/textMarginLeft"/>
     </LinearLayout>
 
@@ -50,7 +50,7 @@
             android:id="@+id/petEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/email"
+            android:text=""
             android:layout_marginLeft="@dimen/textMarginLeft"/>
     </LinearLayout>
 

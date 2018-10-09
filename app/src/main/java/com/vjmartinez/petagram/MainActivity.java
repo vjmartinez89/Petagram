@@ -1,21 +1,15 @@
 package com.vjmartinez.petagram;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import android.widget.ImageView;
 
 public class MainActivity extends PetagramActivity {
 
@@ -23,8 +17,11 @@ public class MainActivity extends PetagramActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initFloatingActionButton();
-        initShowPetsButton();
+        initComponents();
+    }
+
+    private void initComponents() {
+       initFloatingActionButton();
     }
 
     /**
@@ -52,21 +49,58 @@ public class MainActivity extends PetagramActivity {
                         .show();
             }
         });
+        initShowUsersButon();
     }
 
 
-    private void initShowPetsButton(){
-        Button showPetsButton = (Button)findViewById(R.id.btnMainPage);
-        showPetsButton.setOnClickListener(new View.OnClickListener() {
+    private void initShowUsersButon(){
+        ImageView showUserImageView = (ImageView)findViewById(R.id.iconUsersList);
+        showUserImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), PetListActivity.class);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                i.putExtra("KEY_DATE",simpleDateFormat.format(Calendar.getInstance().getTime()));//Envia un parametro a la activity destino
+                Intent i = new Intent(getBaseContext(), ContactListActivity.class);
                 startActivity(i);
+                finish();
             }
         });
     }
 
+    /**
+     * On back button confirm and close app
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            closeApplication();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
+    /**
+     * Confirm and close app
+     */
+    private void closeApplication(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.exit_confirm_tittle));
+        builder.setMessage(getResources().getString(R.string.exit_confirm))
+                .setCancelable(false)
+                .setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                    }
+                })
+                .setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }

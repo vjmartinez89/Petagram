@@ -2,20 +2,18 @@ package com.vjmartinez.petagram;
 
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-public class PetListActivity extends PetagramActivity {
+public class ContactListActivity extends PetagramActivity {
 
     //Global variables
     SwipeRefreshLayout swipeRefreshLayout;
@@ -25,12 +23,8 @@ public class PetListActivity extends PetagramActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet_list);
+        setContentView(R.layout.activity_contact_list);
 
-        //Se toman los parametros enviados
-        Bundle extras = getIntent().getExtras();
-        String oppeningDate = extras.getString("KEY_DATE");
-        //showToast(oppeningDate);
         final List<Contacto> contactos = getContactList();
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshMain);
         contactList = (ListView)findViewById(R.id.listViewMain);
@@ -54,11 +48,12 @@ public class PetListActivity extends PetagramActivity {
      * @return
      */
     private void openPetDetail(Contacto contacto) {
-        Intent i = new Intent(getBaseContext(), PetDetailActivity.class);
+        Intent i = new Intent(getBaseContext(), ContactDetailActivity.class);
         i.putExtra("CONTACT_NAME", contacto.getName());//Envia un parametro a la activity destino
         i.putExtra("CONTACT_PHONE", contacto.getPhone());//Envia un parametro a la activity destino
         i.putExtra("CONTACT_EMAIL", contacto.getEmail());//Envia un parametro a la activity destino
         startActivity(i);
+        finish(); //Finish PetList Activity
     }
 
     /**
@@ -93,5 +88,22 @@ public class PetListActivity extends PetagramActivity {
                 "314 531 2131", "nicole102014@gmail.com"));
 
         return contacts;
+    }
+
+
+    /**
+     * Go to Main Activity when user touch back button
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

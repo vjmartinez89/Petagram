@@ -49,16 +49,30 @@ public class MainActivity extends PetagramActivity {
                         .show();
             }
         });
-        initShowUsersButon();
+        initShowUsersButton();
     }
 
 
-    private void initShowUsersButon(){
+    private void initShowUsersButton(){
         ImageView showUserImageView = (ImageView)findViewById(R.id.iconUsersList);
         showUserImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getBaseContext(), ContactListActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        initSingInButton();
+    }
+
+
+    private void initSingInButton(){
+        ImageView showUserImageView = (ImageView)findViewById(R.id.iconSignIn);
+        showUserImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), SignInStep1Activity.class);
                 startActivity(i);
                 finish();
             }

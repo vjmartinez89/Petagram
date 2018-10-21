@@ -31,7 +31,7 @@
     <string name="back">Atrás</string>
     <string name="sex">Sexo</string>
     <string name="man">Hombre</string>
-    <string name="women">Mujer</string>
+    <string name="woman">Mujer</string>
     <!-- Messages -->
     <string name="name_mandatory">El campo Nombre es obligatorio</string>
     <string name="birthday_mandatory">El campo Fecha de nacimiento es obligatorio</string>

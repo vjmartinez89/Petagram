@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,6 @@ public class ContactListActivity extends PetagramActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
 
-        final List<Contacto> contactos = getContactList();
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshMain);
 
         contacList = (RecyclerView) findViewById(R.id.rvContactList);
@@ -40,18 +40,7 @@ public class ContactListActivity extends PetagramActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         contacList.setLayoutManager(linearLayoutManager);
-        contacList.setAdapter(new ContactDetailAdapter(contactos, this));
-
-        /*
-          // IMPLEMENTATION WITH LISTVIEW
-        contactList = (ListView)findViewById(R.id.listViewMain);
-        contactList.setAdapter(new ArrayAdapter<Contacto>(this, android.R.layout.simple_list_item_1, contactos));
-        contactList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                               @Override
-                                               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                                   openPetDetail(contactos.get(position));
-                                               }
-                                           });*/
+        contacList.setAdapter(new ContactDetailAdapter(getContactList(), this));
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -62,24 +51,10 @@ public class ContactListActivity extends PetagramActivity {
     }
 
     /**
-     * Create click listener
-     * @return
-     */
-    private void openPetDetail(Contacto contacto) {
-        Intent i = new Intent(getBaseContext(), ContactDetailActivity.class);
-        i.putExtra("CONTACT_NAME", contacto.getName());//Envia un parametro a la activity destino
-        i.putExtra("CONTACT_PHONE", contacto.getPhone());//Envia un parametro a la activity destino
-        i.putExtra("CONTACT_EMAIL", contacto.getEmail());//Envia un parametro a la activity destino
-        startActivity(i);
-        finish(); //Finish PetList Activity
-    }
-
-    /**
-     * Refresh pet list
+     * Refresh contact list
      */
     private void refreshContent(){
-        final List<Contacto> contactos =  getContactList();
-        contacList.setAdapter(new ContactDetailAdapter(contactos, this));
+        contacList.setAdapter(new ContactDetailAdapter( getContactList(), this));
         swipeRefreshLayout.setRefreshing(false);
     }
 
@@ -87,18 +62,30 @@ public class ContactListActivity extends PetagramActivity {
      * Get a contact list
      * @return
      */
-    private List<Contacto> getContactList(){
-        List<Contacto> contacts = new ArrayList<>();
+    private List<Contact> getContactList(){
+        List<Contact> contacts = new ArrayList<>();
+        try {
 
-        contacts.add(new Contacto("Victor Julio Martinez Barrios",
-                "314 531 6197", "vijumaba89@gmail.com", R.drawable.ic_user_male));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            contacts.add(new Contact("Victor Julio Martinez Barrios",
+                    "314 531 6197", "vijumaba89@gmail.com", R.drawable.ic_user_male,
+                    dateFormat.parse("11/08/1989"),
+                    "M", "Car. 59 # 70 - 349"));
 
-       contacts.add(new Contacto("Ana Milena Mejia Diaz",
-                "314 571 3323", "amdiaz220285@gmail.com", R.drawable.ic_user_female));
+            contacts.add(new Contact("Ana Milena Mejia Diaz",
+                    "314 571 3323", "amdiaz220285@gmail.com", R.drawable.ic_user_female,
+                    dateFormat.parse("22/02/1985"),
+                    "F", "Car. 59 # 70 - 349"));
 
-        contacts.add(new Contacto("Nicole Martínez Mejía",
-                "314 531 2131", "nicole102014@gmail.com", R.drawable.ic_user_female));
+            contacts.add(new Contact("Nicole Martínez Mejía",
+                    "314 531 2131", "nicole102014@gmail.com", R.drawable.ic_user_female,
+                    dateFormat.parse("01/10/2014"),
+                    "F", "Car. 59 # 70 - 349"));
 
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
         return contacts;
     }
 

@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,11 @@ public class ContactDetailActivity extends AppCompatActivity {
     TextView textViewName;
     TextView textViewPhone;
     TextView textViewEmail;
+    TextView textViewBirthDate;
+    TextView textViewSex;
+    TextView textViewAddress;
+    ImageView imgContactProfile;
+
     LinearLayout rowPhone;
     LinearLayout rowEmail;
 
@@ -26,9 +32,14 @@ public class ContactDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
 
-        textViewName = (TextView) findViewById(R.id.petNameText);
-        textViewPhone = (TextView) findViewById(R.id.petTelefono);
-        textViewEmail = (TextView) findViewById(R.id.petEmail);
+        textViewName = (TextView) findViewById(R.id.tv_cd_name);
+        textViewPhone = (TextView) findViewById(R.id.tv_cd_phone);
+        textViewEmail = (TextView) findViewById(R.id.tv_cd_email);
+        textViewBirthDate = (TextView) findViewById(R.id.tv_cd_birth_date);
+        textViewSex = (TextView) findViewById(R.id.tv_cd_sex);
+        textViewAddress = (TextView) findViewById(R.id.tv_cd_address);
+        imgContactProfile = (ImageView)findViewById(R.id.img_cd_profile);
+
         rowPhone = (LinearLayout) findViewById(R.id.rowPhone);
         rowEmail = (LinearLayout) findViewById(R.id.rowEmail);
 
@@ -37,9 +48,23 @@ public class ContactDetailActivity extends AppCompatActivity {
             String contactName = extras.getString("CONTACT_NAME");
             String contactPhone = extras.getString("CONTACT_PHONE");
             String contactEmail = extras.getString("CONTACT_EMAIL");
+            String contactSex = extras.getString("CONTACT_SEX");
+            String contactBirthDate = extras.getString("CONTACT_BIRTH_DATE");
+            String contactAddress = extras.getString("CONTACT_ADDRESS");
+            String contactPhoto = extras.getString("CONTACT_PHOTO");
+
+
             textViewName.setText(contactName);
             textViewPhone.setText(contactPhone);
             textViewEmail.setText(contactEmail);
+            textViewBirthDate.setText(contactBirthDate);
+            textViewSex.setText(contactSex);
+            textViewAddress.setText(contactAddress);
+
+            if(!StringUtils.isEmpty(contactPhoto)){
+                imgContactProfile.setImageResource(Integer.parseInt(contactPhoto));
+            }
+
         }
 
         rowPhone.setOnClickListener(new View.OnClickListener() {

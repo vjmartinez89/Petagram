@@ -49,9 +49,9 @@ public class SignInStep1Activity extends AppCompatActivity {
         //Input initialization
         txiCompleteName = (TextInputEditText)findViewById(R.id.txiCompleteName);
         txiBirthDate = (TextInputEditText)findViewById(R.id.txiBirthDate);
-        txiPhone = (TextInputEditText)findViewById(R.id.txiPhone);
-        txiEmail = (TextInputEditText)findViewById(R.id.txiEmail);
-        txiContactDescription = (TextInputEditText)findViewById(R.id.txiContactDescription);
+        txiPhone = (TextInputEditText)findViewById(R.id.txi_si_phone);
+        txiEmail = (TextInputEditText)findViewById(R.id.txi_si_email);
+        txiContactDescription = (TextInputEditText)findViewById(R.id.txi_si_address);
         btnSingInNext = (MaterialButton)findViewById(R.id.btn_sing_in_next);
 
         //Date picker dialog click

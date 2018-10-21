@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -24,14 +25,14 @@ public class ContactDetailAdapter
         extends RecyclerView.Adapter<ContactDetailAdapter.ContactDetailViewHolder> {
 
 
-    private List<Contacto> contacts;
+    private List<Contact> contacts;
     private Activity activity;
 
     /**
      * Default constructor
      * @param contacts
      */
-    public ContactDetailAdapter(List<Contacto> contacts, Activity activity){
+    public ContactDetailAdapter(List<Contact> contacts, Activity activity){
         this.contacts = contacts;
         this.activity = activity;
     }
@@ -48,19 +49,24 @@ public class ContactDetailAdapter
     //Fill the list contact object in position to view properties
     @Override
     public void onBindViewHolder(@NonNull ContactDetailViewHolder contactDetailViewHolder, int position) {
-        final Contacto contacto = contacts.get(position);
-        contactDetailViewHolder.imgContactProfile.setImageResource(contacto.getPhoto());
-        contactDetailViewHolder.tviCardviewContactName.setText(contacto.getName());
-        contactDetailViewHolder.tviCardviewContactPhone.setText(contacto.getPhone());
-        contactDetailViewHolder.tviCardviewContactEmail.setText(contacto.getEmail());
+        final Contact contact = contacts.get(position);
+        contactDetailViewHolder.imgContactProfile.setImageResource(contact.getPhoto());
+        contactDetailViewHolder.tviCardviewContactName.setText(contact.getName());
+        contactDetailViewHolder.tviCardviewContactPhone.setText(contact.getPhone());
+        contactDetailViewHolder.tviCardviewContactEmail.setText(contact.getEmail());
 
         contactDetailViewHolder.imgContactProfile.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent i = new Intent(activity, ContactDetailActivity.class);
                 //Send parameters to Detail Activity
-                i.putExtra("CONTACT_NAME", contacto.getName());
-                i.putExtra("CONTACT_PHONE", contacto.getPhone());
-                i.putExtra("CONTACT_EMAIL", contacto.getEmail());
+                i.putExtra("CONTACT_NAME", contact.getName());
+                i.putExtra("CONTACT_PHONE", contact.getPhone());
+                i.putExtra("CONTACT_PHOTO", String.valueOf(contact.getPhoto()));
+                i.putExtra("CONTACT_EMAIL", contact.getEmail());
+                i.putExtra("CONTACT_SEX", "M".equalsIgnoreCase(contact.getSex()) ? "Hombre" : "Mujer");
+                i.putExtra("CONTACT_BIRTH_DATE", new SimpleDateFormat("dd/MM/yyy")
+                        .format(contact.getBirthDate()));
+                i.putExtra("CONTACT_ADDRESS", contact.getAddress());
                 activity.startActivity(i);
                 activity.finish(); //Finish PetList Activity
             }

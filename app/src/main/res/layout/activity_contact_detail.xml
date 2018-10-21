@@ -16,51 +16,12 @@
         android:src="@drawable/ic_person_24dp"/>
 
     <TextView
-        android:id="@+id/petNameText"
+        android:id="@+id/tv_cd_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
         android:textStyle="bold"
         android:textSize="@dimen/title_size"/>
-
-    <LinearLayout
-        android:id="@+id/rowPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/text_margin_top">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_phone_24dp"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:id="@+id/petTelefono"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginLeft="@dimen/text_margin_left"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/rowEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/text_margin_top">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_email_24dp"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:id="@+id/petEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginLeft="@dimen/text_margin_left"/>
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/cd_row_birth_date"
@@ -78,8 +39,77 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:layout_marginLeft="@dimen/text_margin_left"/>
+            android:layout_marginLeft="@dimen/text_margin_left"
+            android:textSize="@dimen/basic_text_input_size"
+            android:textColor="@color/textColor"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cd_row_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/text_margin_top">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_person_24dp"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/tv_cd_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginLeft="@dimen/text_margin_left"
+            android:textSize="@dimen/basic_text_input_size"
+            android:textColor="@color/textColor"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rowPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/text_margin_top">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_phone_24dp"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/tv_cd_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginLeft="@dimen/text_margin_left"
+            android:textSize="@dimen/basic_text_input_size"
+            android:textColor="@color/textColor"/>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/rowEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/text_margin_top">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_email_24dp"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/tv_cd_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginLeft="@dimen/text_margin_left"
+            android:textSize="@dimen/basic_text_input_size"
+            android:textColor="@color/textColor"/>
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/cd_row_address"
@@ -97,13 +127,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:layout_marginLeft="@dimen/text_margin_left"/>
+            android:layout_marginLeft="@dimen/text_margin_left"
+            android:textSize="@dimen/basic_text_input_size"
+            android:textColor="@color/textColor"/>
     </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/petEdad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
 </LinearLayout>

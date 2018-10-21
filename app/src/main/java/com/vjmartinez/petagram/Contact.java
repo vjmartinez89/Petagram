@@ -17,6 +17,10 @@ public class Contact {
     private String address;
     private Date birthDate;
 
+    public Contact (){
+        //Default constructor
+    }
+
     /**
      * Default constructor
      * @param name

@@ -8,22 +8,32 @@ import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.RadioButton;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class SignInStep1Activity extends AppCompatActivity {
+public class SignInStep1Activity extends PetagramActivity {
 
     TextInputEditText txiCompleteName = null;
     TextInputEditText txiBirthDate = null;
     TextInputEditText txiPhone = null;
     TextInputEditText txiEmail = null;
-    TextInputEditText txiContactDescription = null;
+    TextInputEditText txiContactAddress = null;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     MaterialButton btnSingInNext = null;
+    RadioButton rbMan = null;
+    RadioButton rbWoman = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +43,40 @@ public class SignInStep1Activity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && !extras.isEmpty()) {
-            txiCompleteName.setText(extras.getString("CONTACT_NAME"));
-            txiBirthDate.setText(extras.getString("CONTACT_BIRTHDAY"));
-            txiPhone.setText(extras.getString("CONTACT_PHONE"));
-            txiEmail.setText(extras.getString("CONTACT_EMAIL"));
-            txiContactDescription.setText(StringUtils.nvl(extras.getString("CONTACT_DESCRIPTION"), ""));
+
+            if (extras != null && !extras.isEmpty()) {
+                if(!StringUtils.isEmpty(extras.getString("CONTACT_OBJECT"))){
+                    try {
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        Contact contact = objectMapper.readValue(extras.getString("CONTACT_OBJECT"),
+                                Contact.class);
+                        setFormData(contact);
+                    }catch(Exception e){
+                        Log.e("Error", e.getMessage(), e);
+                    }
+                }
+            }
         }
+    }
+
+    /**
+     * Set object data to form components
+     * @param contact
+     */
+    private void setFormData(Contact contact) {
+
+        txiCompleteName.setText(contact.getName());
+        txiBirthDate.setText(new SimpleDateFormat("dd/MM/yyyy")
+                .format(contact.getBirthDate()));
+        if("M".equalsIgnoreCase(contact.getSex())){
+            rbMan.setChecked(true);
+        }else{
+            rbWoman.setChecked(true);
+        }
+        txiPhone.setText(contact.getPhone());
+        txiEmail.setText(contact.getEmail());
+        txiContactAddress.setText(StringUtils.nvl(contact.getAddress(),
+                ""));
 
     }
 
@@ -51,8 +89,10 @@ public class SignInStep1Activity extends AppCompatActivity {
         txiBirthDate = (TextInputEditText)findViewById(R.id.txiBirthDate);
         txiPhone = (TextInputEditText)findViewById(R.id.txi_si_phone);
         txiEmail = (TextInputEditText)findViewById(R.id.txi_si_email);
-        txiContactDescription = (TextInputEditText)findViewById(R.id.txi_si_address);
+        txiContactAddress = (TextInputEditText)findViewById(R.id.txi_si_address);
         btnSingInNext = (MaterialButton)findViewById(R.id.btn_sing_in_next);
+        rbMan = (RadioButton)findViewById( R.id.radio_man);
+        rbWoman = (RadioButton)findViewById( R.id.radio_woman);
 
         //Date picker dialog click
         txiBirthDate.setOnClickListener(new View.OnClickListener() {
@@ -89,16 +129,41 @@ public class SignInStep1Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if(validateForm()) {
                     Intent i = new Intent(getBaseContext(), SignInConfirmationActivity.class);
-                    i.putExtra("CONTACT_NAME", txiCompleteName.getText().toString());
-                    i.putExtra("CONTACT_BIRTHDAY", txiBirthDate.getText().toString());
-                    i.putExtra("CONTACT_PHONE", txiPhone.getText().toString());
-                    i.putExtra("CONTACT_EMAIL", txiEmail.getText().toString());
-                    i.putExtra("CONTACT_DESCRIPTION", txiContactDescription.getText().toString());
+                    Contact contact = getFormData();
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    try {
+                        i.putExtra("CONTACT_OBJECT", objectMapper.writeValueAsString(contact));
+                    }catch(Exception jse){
+                        i.putExtra("CONTACT_OBJECT", "" );
+                        Log.e("Error", jse.getMessage(), jse);
+                    }
                     startActivity(i);
                     finish(); //Finish this Activity
                 }
             }
         });
+    }
+
+
+    /**
+     * Create a Contact object from Form data
+     * @return
+     */
+    private Contact getFormData() {
+        try {
+            return new Contact(
+                    txiCompleteName.getText().toString(),
+                    txiPhone.getText().toString(),
+                    txiEmail.getText().toString(),
+                    R.drawable.ic_user_male,
+                    (new SimpleDateFormat("dd/MM/yyyy")).parse(txiBirthDate.getText().toString()),
+                    rbMan.isChecked() ? "M" : "F",
+                    txiContactAddress.getText().toString()
+                    );
+        }catch(Exception e){
+            Log.e("Error", e.getMessage(), e);
+        }
+        return null;
     }
 
     /**

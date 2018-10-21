@@ -5,9 +5,14 @@ import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.text.SimpleDateFormat;
 
 public class SignInConfirmationActivity extends AppCompatActivity {
 
@@ -15,7 +20,8 @@ public class SignInConfirmationActivity extends AppCompatActivity {
     private TextView tviContactBirthday;
     private TextView tviContactPhone;
     private TextView tviContactEmail;
-    private TextView tviContactDescription;
+    private TextView tviContactAddress;
+    private TextView tviContactSex;
     private MaterialButton btnSingInBack;
 
     @Override
@@ -27,12 +33,35 @@ public class SignInConfirmationActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && !extras.isEmpty()) {
-            tviContactName.setText(extras.getString("CONTACT_NAME"));
-            tviContactBirthday.setText(extras.getString("CONTACT_BIRTHDAY"));
-            tviContactPhone.setText(extras.getString("CONTACT_PHONE"));
-            tviContactEmail.setText(extras.getString("CONTACT_EMAIL"));
-            tviContactDescription.setText(StringUtils.nvl(extras.getString("CONTACT_DESCRIPTION"), ""));
+            if(!StringUtils.isEmpty(extras.getString("CONTACT_OBJECT"))){
+                try {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    Contact contact = objectMapper.readValue(extras.getString("CONTACT_OBJECT"),
+                            Contact.class);
+                    setFormData(contact);
+                }catch(Exception e){
+                    Log.e("Error", e.getMessage(), e);
+                }
+            }
         }
+
+    }
+
+    /**
+     * Set object data to form views
+     * @param contact
+     */
+    private void setFormData(Contact contact) {
+
+        tviContactName.setText(contact.getName());
+        tviContactBirthday.setText(new SimpleDateFormat("dd/MM/yyyy")
+                .format(contact.getBirthDate()));
+        tviContactSex.setText( "M".equalsIgnoreCase(contact.getSex()) ?
+                getResources().getString(R.string.man) :
+                getResources().getString(R.string.woman));
+        tviContactPhone.setText(contact.getPhone());
+        tviContactEmail.setText(contact.getEmail());
+        tviContactAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
 
     }
 
@@ -43,9 +72,10 @@ public class SignInConfirmationActivity extends AppCompatActivity {
         //TextView initialization
         tviContactName = (TextView) findViewById(R.id.tvi_contact_name);
         tviContactBirthday = (TextView) findViewById(R.id.tvi_contact_birthday);
+        tviContactSex = (TextView)findViewById(R.id.tvi_contact_sex);
         tviContactPhone = (TextView) findViewById(R.id.tvi_contact_phone);
         tviContactEmail = (TextView) findViewById(R.id.tvi_contact_email);
-        tviContactDescription = (TextView) findViewById(R.id.tvi_contact_description);
+        tviContactAddress = (TextView) findViewById(R.id.tvi_contact_address);
         btnSingInBack = (MaterialButton) findViewById(R.id.btn_sing_in_back);
 
         btnSingInBack.setOnClickListener(new View.OnClickListener() {
@@ -70,14 +100,44 @@ public class SignInConfirmationActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * Go to previous activity
+     */
     private void goBack(){
-        Intent intent = new Intent(this, SignInStep1Activity.class);
-        intent.putExtra("CONTACT_NAME", tviContactName.getText().toString());
-        intent.putExtra("CONTACT_BIRTHDAY", tviContactBirthday.getText().toString());
-        intent.putExtra("CONTACT_PHONE", tviContactPhone.getText().toString());
-        intent.putExtra("CONTACT_EMAIL", tviContactEmail.getText().toString());
-        intent.putExtra("CONTACT_DESCRIPTION", tviContactDescription.getText().toString());
-        startActivity(intent);
+        Intent i = new Intent(this, SignInStep1Activity.class);
+        Contact contact = getFormData();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            i.putExtra("CONTACT_OBJECT", objectMapper.writeValueAsString(contact));
+        }catch(Exception jse){
+            i.putExtra("CONTACT_OBJECT", "" );
+            Log.e("Error", jse.getMessage(), jse);
+        }
+        startActivity(i);
         finish();
+    }
+
+
+    /**
+     * Create a Contact object from Form data
+     * @return
+     */
+    private Contact getFormData() {
+        try {
+            return new Contact(
+                    tviContactName.getText().toString(),
+                    tviContactPhone.getText().toString(),
+                    tviContactEmail.getText().toString(),
+                    R.drawable.ic_user_male,
+                    (new SimpleDateFormat("dd/MM/yyyy")).parse(tviContactBirthday.getText()
+                            .toString()),
+                    getResources().getString(R.string.man).equalsIgnoreCase(tviContactSex.getText()
+                            .toString()) ? "M" : "F",
+                    tviContactAddress.getText().toString()
+            );
+        }catch(Exception e){
+            Log.e("Error", e.getMessage(), e);
+        }
+        return null;
     }
 }

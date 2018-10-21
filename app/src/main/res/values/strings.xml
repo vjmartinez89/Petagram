@@ -20,6 +20,7 @@
 
     <!-- Contact signIn -->
     <string name="complete_name">Nombre completo</string>
+    <string name="name">Nombre</string>
     <string name="birthday">Fecha de nacimiento</string>
     <string name="phone">Teléfono</string>
     <string name="phone_short">Tel.</string>

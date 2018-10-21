@@ -48,7 +48,8 @@ public class ContactDetailAdapter
 
     //Fill the list contact object in position to view properties
     @Override
-    public void onBindViewHolder(@NonNull ContactDetailViewHolder contactDetailViewHolder, int position) {
+    public void onBindViewHolder(@NonNull ContactDetailViewHolder contactDetailViewHolder,
+                                 int position) {
         final Contact contact = contacts.get(position);
         contactDetailViewHolder.imgContactProfile.setImageResource(contact.getPhoto());
         contactDetailViewHolder.tviCardviewContactName.setText(contact.getName());
@@ -63,7 +64,9 @@ public class ContactDetailAdapter
                 i.putExtra("CONTACT_PHONE", contact.getPhone());
                 i.putExtra("CONTACT_PHOTO", String.valueOf(contact.getPhoto()));
                 i.putExtra("CONTACT_EMAIL", contact.getEmail());
-                i.putExtra("CONTACT_SEX", "M".equalsIgnoreCase(contact.getSex()) ? "Hombre" : "Mujer");
+                i.putExtra("CONTACT_SEX", "M".equalsIgnoreCase(contact.getSex()) ?
+                        activity.getResources().getString(R.string.man) :
+                        activity.getResources().getString(R.string.woman));
                 i.putExtra("CONTACT_BIRTH_DATE", new SimpleDateFormat("dd/MM/yyy")
                         .format(contact.getBirthDate()));
                 i.putExtra("CONTACT_ADDRESS", contact.getAddress());
@@ -95,9 +98,12 @@ public class ContactDetailAdapter
             super(itemView);
             //Initialize card view component
             imgContactProfile = (ImageView) itemView.findViewById(R.id.imgContactProfile);
-            tviCardviewContactName = (TextView)itemView.findViewById(R.id.tvi_cardview_contact_name);
-            tviCardviewContactPhone = (TextView) itemView.findViewById(R.id.tvi_cardview_contact_phone);
-            tviCardviewContactEmail = (TextView)itemView.findViewById(R.id.tvi_cardview_contact_email);
+            tviCardviewContactName = (TextView)itemView.findViewById(R.id
+                    .tvi_cardview_contact_name);
+            tviCardviewContactPhone = (TextView) itemView.findViewById(R.id
+                    .tvi_cardview_contact_phone);
+            tviCardviewContactEmail = (TextView)itemView.findViewById(R.id
+                    .tvi_cardview_contact_email);
         }
 
     }

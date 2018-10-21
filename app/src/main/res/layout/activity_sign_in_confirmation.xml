@@ -25,10 +25,20 @@
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/text_margin_top">
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textStyle="bold"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
+            <TextView
                 android:id="@+id/tvi_contact_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""/>
+                android:text=""
+                android:layout_marginLeft="@dimen/text_margin_left"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
         </LinearLayout>
 
         <LinearLayout
@@ -40,13 +50,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/birthday"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
             <TextView
                 android:id="@+id/tvi_contact_birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:layout_marginLeft="@dimen/text_margin_left"/>
+                android:layout_marginLeft="@dimen/text_margin_left"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
         </LinearLayout>
 
         <LinearLayout
@@ -57,14 +71,41 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/sex"
+                android:textStyle="bold"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
+            <TextView
+                android:id="@+id/tvi_contact_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginLeft="@dimen/text_margin_left"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/text_margin_top">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/phone_short"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
             <TextView
                 android:id="@+id/tvi_contact_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:layout_marginLeft="@dimen/text_margin_left"/>
+                android:layout_marginLeft="@dimen/text_margin_left"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
         </LinearLayout>
 
         <LinearLayout
@@ -76,13 +117,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/email"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
             <TextView
                 android:id="@+id/tvi_contact_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:layout_marginLeft="@dimen/text_margin_left"/>
+                android:layout_marginLeft="@dimen/text_margin_left"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
         </LinearLayout>
 
         <LinearLayout
@@ -93,14 +138,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/description_short"
-                android:textStyle="bold"/>
+                android:text="@string/address"
+                android:textStyle="bold"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
             <TextView
-                android:id="@+id/tvi_contact_description"
+                android:id="@+id/tvi_contact_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:layout_marginLeft="@dimen/text_margin_left"/>
+                android:layout_marginLeft="@dimen/text_margin_left"
+                android:textSize="@dimen/basic_text_input_size"
+                android:textColor="@color/textColor"/>
         </LinearLayout>
 
         <LinearLayout

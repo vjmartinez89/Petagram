@@ -3,6 +3,8 @@ package com.vjmartinez.petagram;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Adapter;
@@ -17,8 +19,9 @@ public class ContactListActivity extends PetagramActivity {
 
     //Global variables
     SwipeRefreshLayout swipeRefreshLayout;
-    ListView contactList;
+   // ListView contactList;
     Adapter adapter;
+    RecyclerView contacList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,20 @@ public class ContactListActivity extends PetagramActivity {
 
         final List<Contacto> contactos = getContactList();
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshMain);
+
+        contacList = (RecyclerView) findViewById(R.id.rvContactList);
+
+        /*We can use GridLayoutManager to see list in grid view
+             GridLayoutManager gridLayoutManager =  new GridLayoutManager( this, 2);
+        */
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        contacList.setLayoutManager(linearLayoutManager);
+        contacList.setAdapter(new ContactDetailAdapter(contactos, this));
+
+        /*
+          // IMPLEMENTATION WITH LISTVIEW
         contactList = (ListView)findViewById(R.id.listViewMain);
         contactList.setAdapter(new ArrayAdapter<Contacto>(this, android.R.layout.simple_list_item_1, contactos));
         contactList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -34,7 +51,8 @@ public class ContactListActivity extends PetagramActivity {
                                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                                    openPetDetail(contactos.get(position));
                                                }
-                                           });
+                                           });*/
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -61,13 +79,7 @@ public class ContactListActivity extends PetagramActivity {
      */
     private void refreshContent(){
         final List<Contacto> contactos =  getContactList();
-        contactList.setAdapter(new ArrayAdapter<Contacto>(this, android.R.layout.simple_list_item_1, contactos));
-        contactList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                openPetDetail(contactos.get(position));
-            }
-        });
+        contacList.setAdapter(new ContactDetailAdapter(contactos, this));
         swipeRefreshLayout.setRefreshing(false);
     }
 
@@ -79,13 +91,13 @@ public class ContactListActivity extends PetagramActivity {
         List<Contacto> contacts = new ArrayList<>();
 
         contacts.add(new Contacto("Victor Julio Martinez Barrios",
-                "314 531 6197", "vijumaba89@gmail.com"));
+                "314 531 6197", "vijumaba89@gmail.com", R.drawable.ic_user_male));
 
-        contacts.add(new Contacto("Ana Milena Mejia Diaz",
-                "314 571 3323", "amdiaz220285@gmail.com"));
+       contacts.add(new Contacto("Ana Milena Mejia Diaz",
+                "314 571 3323", "amdiaz220285@gmail.com", R.drawable.ic_user_female));
 
         contacts.add(new Contacto("Nicole Martínez Mejía",
-                "314 531 2131", "nicole102014@gmail.com"));
+                "314 531 2131", "nicole102014@gmail.com", R.drawable.ic_user_female));
 
         return contacts;
     }
@@ -106,4 +118,5 @@ public class ContactListActivity extends PetagramActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }

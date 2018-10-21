@@ -7,31 +7,39 @@
     android:padding="@dimen/layout_padding"
     tools:context=".ContactDetailActivity"
     android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/img_cd_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin_top"
+        android:src="@drawable/ic_person_24dp"/>
+
     <TextView
         android:id="@+id/petNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
         android:textStyle="bold"
-        android:textSize="@dimen/titleSize"/>
+        android:textSize="@dimen/title_size"/>
 
     <LinearLayout
         android:id="@+id/rowPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/textMarginTop">
+        android:layout_marginTop="@dimen/text_margin_top">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icons8_call_24"
+            android:src="@drawable/ic_phone_24dp"
             android:layout_gravity="center_vertical"/>
         <TextView
             android:id="@+id/petTelefono"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:layout_marginLeft="@dimen/textMarginLeft"/>
+            android:layout_marginLeft="@dimen/text_margin_left"/>
     </LinearLayout>
 
 
@@ -40,19 +48,58 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/textMarginTop">
+        android:layout_marginTop="@dimen/text_margin_top">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icons8_email_24"
+            android:src="@drawable/ic_email_24dp"
             android:layout_gravity="center_vertical"/>
         <TextView
             android:id="@+id/petEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:layout_marginLeft="@dimen/textMarginLeft"/>
+            android:layout_marginLeft="@dimen/text_margin_left"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cd_row_birth_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/text_margin_top">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_person_calendar_24dp"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/tv_cd_birth_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginLeft="@dimen/text_margin_left"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cd_row_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/text_margin_top">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_location_on_24dp"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/tv_cd_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginLeft="@dimen/text_margin_left"/>
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/petEdad"

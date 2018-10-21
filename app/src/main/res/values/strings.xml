@@ -1,4 +1,11 @@
 <resources>
+
+    <!-- Basic Strings -->
+    <string name="error">ERROR</string>
+    <string name="info">INFORMACIÓN</string>
+    <string name="validate">VALIDACIÓN</string>
+
+    <!-- Main activity -->
     <string name="app_name">Petagram</string>
     <string name="app_title">Bienvenido</string>
     <string name="see_users">Ver colaboradores</string>
@@ -10,7 +17,24 @@
     <string name="no">No</string>
     <string name="login">Iniciar sesión</string>
     <string name="singin">Registrarse</string>
+
+    <!-- Contact signIn -->
     <string name="complete_name">Nombre completo</string>
     <string name="birthday">Fecha de nacimiento</string>
     <string name="phone">Teléfono</string>
+    <string name="phone_short">Tel.</string>
+    <string name="email">Email</string>
+    <string name="address">Dirección</string>
+    <string name="description_short">Descripción</string>
+    <string name="next">Siguiente</string>
+    <string name="tvi_sign_in_title">Confirmar Datos</string>
+    <string name="back">Atrás</string>
+    <string name="sex">Sexo</string>
+    <string name="man">Hombre</string>
+    <string name="women">Mujer</string>
+    <!-- Messages -->
+    <string name="name_mandatory">El campo Nombre es obligatorio</string>
+    <string name="birthday_mandatory">El campo Fecha de nacimiento es obligatorio</string>
+    <string name="phone_mandatory">El campo Teléfono es obligatorio</string>
+    <string name="email_mandatory">El campo Email es obligatorio</string>
 </resources>

@@ -13,11 +13,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ListView
+           <!-- <ListView
                 android:id="@+id/listViewMain"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/list_height">
-            </ListView>
+            </ListView> -->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvContactList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/basic_margin">
+
+
+            </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

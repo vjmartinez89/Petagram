@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cardview_contact"
+    android:layout_margin="@dimen/basic_margin"
+    android:padding="@dimen/layout_padding"
+    card_view:cardCornerRadius="@dimen/card_corner"
+    >
+    <LinearLayout
+        android:id="@+id/contact_detail_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgContactProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_margin_top"
+            android:src="@drawable/ic_person_24dp"/>
+        <TextView
+            android:id="@+id/tvi_cardview_contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/complete_name"
+            android:textSize="@dimen/title_size"
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
+        
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:gravity="center">
+           <ImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/icons8_call_24"
+               android:layout_gravity="center_vertical"/>
+           <TextView android:id="@+id/tvi_cardview_contact_phone"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="@dimen/basic_text_size"
+               android:text="@string/phone"
+               android:layout_gravity="center"
+               android:layout_marginLeft="@dimen/text_margin_left"/>
+       </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_margin="@dimen/basic_margin">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icons8_email_24"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/tvi_cardview_contact_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/basic_text_size"
+                android:text="@string/email"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/text_margin_left"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

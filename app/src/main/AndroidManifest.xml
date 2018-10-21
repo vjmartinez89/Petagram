@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,8 +20,8 @@
         </activity>
         <activity android:name=".ContactListActivity" />
         <activity android:name=".ContactDetailActivity" />
-        <activity android:name=".ContactListActivity" />
-        <activity android:name=".SignInStep1Activity"></activity>
+        <activity android:name=".SignInStep1Activity" />
+        <activity android:name=".SignInConfirmationActivity"></activity>
     </application>
 
 </manifest>

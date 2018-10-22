@@ -8,11 +8,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.text.SimpleDateFormat;
 
 public class ContactDetailActivity extends AppCompatActivity {
 
@@ -45,26 +50,17 @@ public class ContactDetailActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && !extras.isEmpty()) {
-            String contactName = extras.getString("CONTACT_NAME");
-            String contactPhone = extras.getString("CONTACT_PHONE");
-            String contactEmail = extras.getString("CONTACT_EMAIL");
-            String contactSex = extras.getString("CONTACT_SEX");
-            String contactBirthDate = extras.getString("CONTACT_BIRTH_DATE");
-            String contactAddress = extras.getString("CONTACT_ADDRESS");
-            String contactPhoto = extras.getString("CONTACT_PHOTO");
 
-
-            textViewName.setText(contactName);
-            textViewPhone.setText(contactPhone);
-            textViewEmail.setText(contactEmail);
-            textViewBirthDate.setText(contactBirthDate);
-            textViewSex.setText(contactSex);
-            textViewAddress.setText(contactAddress);
-
-            if(!StringUtils.isEmpty(contactPhoto)){
-                imgContactProfile.setImageResource(Integer.parseInt(contactPhoto));
+            if(!StringUtils.isEmpty(extras.getString("CONTACT_OBJECT"))){
+                try {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    Contact contact = objectMapper.readValue(extras.getString("CONTACT_OBJECT"),
+                            Contact.class);
+                    setFormData(contact);
+                }catch(Exception e){
+                    Log.e("Error", e.getMessage(), e);
+                }
             }
-
         }
 
         rowPhone.setOnClickListener(new View.OnClickListener() {
@@ -130,5 +126,27 @@ public class ContactDetailActivity extends AppCompatActivity {
             finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    /**
+     * Set object data to form views
+     * @param contact
+     */
+    private void setFormData(Contact contact) {
+
+        if(contact.getPhoto() > 0){
+            imgContactProfile.setImageResource(contact.getPhoto());
+        }
+
+        textViewName.setText(contact.getName());
+        textViewBirthDate.setText(new SimpleDateFormat("dd/MM/yyyy")
+                .format(contact.getBirthDate()));
+        textViewSex.setText( "M".equalsIgnoreCase(contact.getSex()) ?
+                getResources().getString(R.string.man) :
+                getResources().getString(R.string.woman));
+        textViewPhone.setText(contact.getPhone());
+        textViewEmail.setText(contact.getEmail());
+        textViewAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
     }
 }

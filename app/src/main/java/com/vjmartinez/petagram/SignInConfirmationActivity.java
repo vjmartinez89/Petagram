@@ -62,7 +62,6 @@ public class SignInConfirmationActivity extends AppCompatActivity {
         tviContactPhone.setText(contact.getPhone());
         tviContactEmail.setText(contact.getEmail());
         tviContactAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
-
     }
 
     /***

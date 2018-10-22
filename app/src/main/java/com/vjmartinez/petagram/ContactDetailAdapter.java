@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -59,17 +62,13 @@ public class ContactDetailAdapter
         contactDetailViewHolder.imgContactProfile.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent i = new Intent(activity, ContactDetailActivity.class);
-                //Send parameters to Detail Activity
-                i.putExtra("CONTACT_NAME", contact.getName());
-                i.putExtra("CONTACT_PHONE", contact.getPhone());
-                i.putExtra("CONTACT_PHOTO", String.valueOf(contact.getPhoto()));
-                i.putExtra("CONTACT_EMAIL", contact.getEmail());
-                i.putExtra("CONTACT_SEX", "M".equalsIgnoreCase(contact.getSex()) ?
-                        activity.getResources().getString(R.string.man) :
-                        activity.getResources().getString(R.string.woman));
-                i.putExtra("CONTACT_BIRTH_DATE", new SimpleDateFormat("dd/MM/yyy")
-                        .format(contact.getBirthDate()));
-                i.putExtra("CONTACT_ADDRESS", contact.getAddress());
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
+                    i.putExtra("CONTACT_OBJECT", objectMapper.writeValueAsString(contact));
+                }catch(Exception jse){
+                    i.putExtra("CONTACT_OBJECT", "" );
+                    Log.e("Error", jse.getMessage(), jse);
+                }
                 activity.startActivity(i);
                 activity.finish(); //Finish PetList Activity
             }

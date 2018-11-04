@@ -1,6 +1,10 @@
 package com.vjmartinez.petagram;
 
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -9,6 +13,8 @@ import android.widget.Toast;
  * The base Activity class
  */
 public class PetagramActivity extends AppCompatActivity {
+
+    protected final int PERMISSIONS_REQUEST_CALL = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,5 +64,58 @@ public class PetagramActivity extends AppCompatActivity {
      */
     protected void showToast(String message){
         MessageUtil.showToast(getBaseContext(),message, Toast.LENGTH_LONG);
+    }
+
+    /**
+     * Process user response for request permission
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[],
+                                           int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CALL:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    showToast("Permission Granted!");
+                } else {
+                    showToast("Permission Denied!");
+                }
+        }
+    }
+
+    /**
+     * Show explanation message to user
+     * @param title
+     * @param message
+     * @param permission
+     * @param permissionRequestCode
+     */
+    protected void showExplanation(String title,
+                                 String message,
+                                 final String permission,
+                                 final int permissionRequestCode) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        requestPermission(permission, permissionRequestCode);
+                    }
+                });
+        builder.create().show();
+    }
+
+    /**
+     * Request user permission
+     * @param permissionName
+     * @param permissionRequestCode
+     */
+    protected void requestPermission(String permissionName, int permissionRequestCode) {
+        ActivityCompat.requestPermissions(this,
+                new String[]{permissionName}, permissionRequestCode);
     }
 }

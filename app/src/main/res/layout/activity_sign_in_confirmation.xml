@@ -4,173 +4,197 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignInConfirmationActivity"
-    android:padding="@dimen/layout_padding">
+    tools:context=".SignInConfirmationActivity" >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/tvi_sign_in_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tvi_sign_in_title"
-            android:gravity="center"
-            android:textSize="@dimen/title_size"
-            android:textStyle="bold"/>
+
+        <include android:id="@+id/mainAcionBar"
+            layout="@layout/action_bar">
+        </include>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/text_margin_top">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/name"
-                android:textStyle="bold"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-            <TextView
-                android:id="@+id/tvi_contact_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:layout_marginLeft="@dimen/text_margin_left"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/text_margin_top">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/birthday"
-                android:textStyle="bold"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-            <TextView
-                android:id="@+id/tvi_contact_birthday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:layout_marginLeft="@dimen/text_margin_left"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/text_margin_top">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sex"
-                android:textStyle="bold"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-            <TextView
-                android:id="@+id/tvi_contact_sex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:layout_marginLeft="@dimen/text_margin_left"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/text_margin_top">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/phone_short"
-                android:textStyle="bold"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-            <TextView
-                android:id="@+id/tvi_contact_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:layout_marginLeft="@dimen/text_margin_left"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/text_margin_top">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/email"
-                android:textStyle="bold"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-            <TextView
-                android:id="@+id/tvi_contact_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:layout_marginLeft="@dimen/text_margin_left"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/text_margin_top">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/address"
-                android:textStyle="bold"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-            <TextView
-                android:id="@+id/tvi_contact_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:layout_marginLeft="@dimen/text_margin_left"
-                android:textSize="@dimen/basic_text_input_size"
-                android:textColor="@color/textColor"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:gravity="center|bottom"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/text_margin_top"
+            android:layout_marginTop="@dimen/basic_margin"
+            android:orientation="vertical"
+            android:padding="@dimen/layout_padding"
             >
-            <android.support.design.button.MaterialButton
-                android:id="@+id/btn_sing_in_back"
+
+            <TextView
+                android:id="@+id/tvi_sign_in_title"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
-                android:text="@string/back"
-                android:textSize="@dimen/button_text_size"
-                android:layout_gravity="bottom"
-                android:gravity="center_horizontal|center"
-                app:cornerRadius="0dp"/>
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/tvi_sign_in_title"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin_top"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvi_contact_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/text_margin_left"
+                    android:text=""
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin_top"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/birthday"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvi_contact_birthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/text_margin_left"
+                    android:text=""
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin_top"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sex"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvi_contact_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/text_margin_left"
+                    android:text=""
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin_top"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_short"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvi_contact_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/text_margin_left"
+                    android:text=""
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin_top"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvi_contact_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/text_margin_left"
+                    android:text=""
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/text_margin_top"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/address"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvi_contact_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/text_margin_left"
+                    android:text=""
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/basic_text_input_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_marginTop="@dimen/text_margin_top"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:orientation="horizontal">
+
+                <android.support.design.button.MaterialButton
+                    android:id="@+id/btn_sing_in_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_gravity="bottom"
+                    android:gravity="center_horizontal|center"
+                    android:text="@string/back"
+                    android:textSize="@dimen/button_text_size"
+                    app:cornerRadius="0dp" />
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
-
 </ScrollView>

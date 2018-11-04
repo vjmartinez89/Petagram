@@ -8,6 +8,7 @@ import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,12 +34,14 @@ public class SignInStep1Activity extends PetagramActivity {
     MaterialButton btnSingInNext = null;
     RadioButton rbMan = null;
     RadioButton rbWoman = null;
+    Toolbar actionBar = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_step1);
+
         initComponents();
 
         Bundle extras = getIntent().getExtras();
@@ -142,6 +145,18 @@ public class SignInStep1Activity extends PetagramActivity {
                 }
             }
         });
+
+        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        setSupportActionBar(actionBar);
+        //Set support for previous action bar button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Intercepts the click event on arrow back button in action bar
+        actionBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
     }
 
 
@@ -211,10 +226,14 @@ public class SignInStep1Activity extends PetagramActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK){
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
+           goBack();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void goBack() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

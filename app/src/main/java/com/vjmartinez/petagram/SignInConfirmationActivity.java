@@ -5,6 +5,7 @@ import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,6 +24,7 @@ public class SignInConfirmationActivity extends AppCompatActivity {
     private TextView tviContactAddress;
     private TextView tviContactSex;
     private MaterialButton btnSingInBack;
+    private Toolbar actionBar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,18 @@ public class SignInConfirmationActivity extends AppCompatActivity {
         btnSingInBack = (MaterialButton) findViewById(R.id.btn_sing_in_back);
 
         btnSingInBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
+
+        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        setSupportActionBar(actionBar);
+        //Set support for previous action bar button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Intercepts the click event on arrow back button in action bar
+        actionBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goBack();

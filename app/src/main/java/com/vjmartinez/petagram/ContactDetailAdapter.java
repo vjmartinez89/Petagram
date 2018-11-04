@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,13 +30,13 @@ public class ContactDetailAdapter
 
 
     private List<Contact> contacts;
-    private Activity activity;
+    private PetagramActivity activity;
 
     /**
      * Default constructor
      * @param contacts
      */
-    public ContactDetailAdapter(List<Contact> contacts, Activity activity){
+    public ContactDetailAdapter(List<Contact> contacts, PetagramActivity activity){
         this.contacts = contacts;
         this.activity = activity;
     }
@@ -59,6 +60,7 @@ public class ContactDetailAdapter
         contactDetailViewHolder.tviCardviewContactPhone.setText(contact.getPhone());
         contactDetailViewHolder.tviCardviewContactEmail.setText(contact.getEmail());
 
+        //Onclick event on user profile image
         contactDetailViewHolder.imgContactProfile.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent i = new Intent(activity, ContactDetailActivity.class);
@@ -70,7 +72,15 @@ public class ContactDetailAdapter
                     Log.e("Error", jse.getMessage(), jse);
                 }
                 activity.startActivity(i);
-                activity.finish(); //Finish PetList Activity
+                activity.finish(); //Finish Contact List Activity
+            }
+        });
+
+        //Onclick event on user like button
+        contactDetailViewHolder.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.showToast("Diste like a "+contact.getName());
             }
         });
     }
@@ -92,6 +102,7 @@ public class ContactDetailAdapter
         private TextView tviCardviewContactName;
         private TextView tviCardviewContactPhone;
         private TextView tviCardviewContactEmail;
+        private ImageButton btnLike;
 
         public ContactDetailViewHolder(View itemView){
             super(itemView);
@@ -103,6 +114,7 @@ public class ContactDetailAdapter
                     .tvi_cardview_contact_phone);
             tviCardviewContactEmail = (TextView)itemView.findViewById(R.id
                     .tvi_cardview_contact_email);
+            btnLike = (ImageButton)itemView.findViewById(R.id.btnLike);
         }
 
     }

@@ -6,12 +6,21 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends PetagramActivity {
+
+    Toolbar actionBar = null;
+    RecyclerView menuItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +29,42 @@ public class MainActivity extends PetagramActivity {
         initComponents();
     }
 
+    /**
+     * Initialize the activity components
+     */
     private void initComponents() {
-       initFloatingActionButton();
+        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        setSupportActionBar(actionBar);
+        initMenu();
+    }
+
+    /**
+     * Initialize the menu
+     */
+    private void initMenu() {
+
+        menuItemList = (RecyclerView) findViewById(R.id.rv_menu_items);
+        GridLayoutManager gridLayoutManager =  new GridLayoutManager( this, 2);
+        menuItemList.setLayoutManager(gridLayoutManager);
+        menuItemList.setAdapter(new MenuItemAdapter(getMenuItems(), this));
+        initFloatingActionButton();
+    }
+
+    /**
+     * Create an return the menu item list
+     * @return
+     */
+    private List<MenuItem> getMenuItems() {
+        List<MenuItem> menuItems = new ArrayList<>();
+        try {
+            menuItems.add(new MenuItem(getResources().getString(R.string.login), R.drawable.ic_login_48, null));
+            menuItems.add(new MenuItem(getResources().getString(R.string.singin), R.drawable.ic_sign_in_48, SignInStep1Activity.class));
+            menuItems.add(new MenuItem(getResources().getString(R.string.see_users), R.drawable.ic_users_list, ContactListActivity.class));
+        }catch (Exception ex)
+        {
+            Log.e("ERROR", "Error creating menu "+ex.getMessage(), ex);
+        }
+        return menuItems;
     }
 
     /**
@@ -49,11 +92,11 @@ public class MainActivity extends PetagramActivity {
                         .show();
             }
         });
-        initShowUsersButton();
+        //initShowUsersButton();
     }
 
 
-    private void initShowUsersButton(){
+   /* private void initShowUsersButton(){
         ImageView showUserImageView = (ImageView)findViewById(R.id.iconUsersList);
         showUserImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +120,7 @@ public class MainActivity extends PetagramActivity {
                 finish();
             }
         });
-    }
+    }*/
 
     /**
      * On back button confirm and close app

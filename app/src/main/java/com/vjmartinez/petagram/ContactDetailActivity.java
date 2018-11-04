@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.text.SimpleDateFormat;
 
-public class ContactDetailActivity extends AppCompatActivity {
+public class ContactDetailActivity extends PetagramActivity {
 
     TextView textViewName;
     TextView textViewPhone;
@@ -28,6 +29,7 @@ public class ContactDetailActivity extends AppCompatActivity {
     TextView textViewSex;
     TextView textViewAddress;
     ImageView imgContactProfile;
+    private Toolbar actionBar = null;
 
     LinearLayout rowPhone;
     LinearLayout rowEmail;
@@ -44,6 +46,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         textViewSex = (TextView) findViewById(R.id.tv_cd_sex);
         textViewAddress = (TextView) findViewById(R.id.tv_cd_address);
         imgContactProfile = (ImageView)findViewById(R.id.img_cd_profile);
+        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
 
         rowPhone = (LinearLayout) findViewById(R.id.rowPhone);
         rowEmail = (LinearLayout) findViewById(R.id.rowEmail);
@@ -69,11 +72,22 @@ public class ContactDetailActivity extends AppCompatActivity {
                 call(v);
             }
         });
-
         rowEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendMail(v);
+            }
+        });
+
+        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        setSupportActionBar(actionBar);
+        //Set support for previous action bar button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //Intercepts the click event on arrow back button in action bar
+        actionBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
             }
         });
     }
@@ -85,14 +99,16 @@ public class ContactDetailActivity extends AppCompatActivity {
     public void call(View v) {
         String callNumber = textViewPhone.getText().toString();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CALL_PHONE )) {
+
+                showExplanation("Permission Needed", "Rationale",
+                        Manifest.permission.CALL_PHONE, PERMISSIONS_REQUEST_CALL);
+
+            } else {
+                requestPermission(Manifest.permission.CALL_PHONE,
+                        PERMISSIONS_REQUEST_CALL);
+            }
         }
         //Init call application
         startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + callNumber)));
@@ -100,7 +116,7 @@ public class ContactDetailActivity extends AppCompatActivity {
 
     /**
      * Init email
-     * @param v
+     * @param v the view
      */
     public void sendMail(View v){
         String email = textViewEmail.getText().toString();
@@ -108,7 +124,7 @@ public class ContactDetailActivity extends AppCompatActivity {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.putExtra(Intent.EXTRA_EMAIL, addressList);
-        emailIntent.setType("message/rfc822"); //Set the applicatrion type
+        emailIntent.setType("message/rfc822"); //Set the application type
         startActivity(Intent.createChooser(emailIntent, "Email"));
     }
 
@@ -121,11 +137,18 @@ public class ContactDetailActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK){
-            Intent intent = new Intent(this, ContactListActivity.class);
-            startActivity(intent);
-            finish();
+           goBack();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * Go back
+     */
+    private void goBack() {
+        Intent intent = new Intent(this, ContactListActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 

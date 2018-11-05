@@ -1,14 +1,14 @@
 <resources>
 
     <!-- Basic Strings -->
-    <string name="error">ERROR</string>
-    <string name="info">INFORMACIÓN</string>
-    <string name="validate">VALIDACIÓN</string>
+    <string name="error">Error</string>
+    <string name="info">Información</string>
+    <string name="validate">Validación</string>
 
     <!-- Main activity -->
     <string name="app_name">Petagram</string>
     <string name="app_title">Bienvenido</string>
-    <string name="see_users">Ver colaboradores</string>
+    <string name="see_users">Usuarios</string>
     <string name="favorite_message">Agregado a favoritos</string>
     <string name="favorite_action_text">Deshacer</string>
     <string name="exit_confirm_tittle">Salir</string>

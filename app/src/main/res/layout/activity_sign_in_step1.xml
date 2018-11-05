@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="@dimen/layout_padding">
+            android:padding="@dimen/layout_padding"
+            android:background="@color/white">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -131,6 +132,7 @@
                     android:layout_height="@dimen/button_height"
                     android:text="@string/next"
                     android:textSize="@dimen/button_text_size"
+                    android:textColor="@color/white"
                     android:layout_gravity="bottom"
                     android:gravity="center_horizontal|center"
                     app:cornerRadius="0dp"/>

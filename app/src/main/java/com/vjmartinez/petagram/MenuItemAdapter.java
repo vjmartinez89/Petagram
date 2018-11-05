@@ -59,7 +59,8 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
                     activity.startActivity(i);
                     activity.finish(); //Finish Main Activity
                 }else{
-                    MessageUtil.showAlertDialog(activity, "Error", "Destination activity is not found!");
+                    MessageUtil.showAlertDialog(activity, activity.getResources().getString(R.string.error),
+                            "Destination activity is not found!");
                 }
             }
         });

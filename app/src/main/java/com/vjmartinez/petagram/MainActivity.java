@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -44,8 +45,10 @@ public class MainActivity extends PetagramActivity {
     private void initMenu() {
 
         menuItemList = (RecyclerView) findViewById(R.id.rv_menu_items);
-        GridLayoutManager gridLayoutManager =  new GridLayoutManager( this, 2);
-        menuItemList.setLayoutManager(gridLayoutManager);
+      /*  GridLayoutManager gridLayoutManager =  new GridLayoutManager( this,
+                2);
+        menuItemList.setLayoutManager(gridLayoutManager);*/
+        menuItemList.setHasFixedSize(true);
         menuItemList.setAdapter(new MenuItemAdapter(getMenuItems(), this));
         initFloatingActionButton();
     }
@@ -92,35 +95,7 @@ public class MainActivity extends PetagramActivity {
                         .show();
             }
         });
-        //initShowUsersButton();
     }
-
-
-   /* private void initShowUsersButton(){
-        ImageView showUserImageView = (ImageView)findViewById(R.id.iconUsersList);
-        showUserImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), ContactListActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
-        initSingInButton();
-    }
-
-
-    private void initSingInButton(){
-        ImageView showUserImageView = (ImageView)findViewById(R.id.iconSignIn);
-        showUserImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), SignInStep1Activity.class);
-                startActivity(i);
-                finish();
-            }
-        });
-    }*/
 
     /**
      * On back button confirm and close app

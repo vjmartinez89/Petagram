@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/backgoundColor"
+    android:background="@color/backgroundColor"
     android:orientation="vertical">
 
     <include android:id="@+id/mainAcionBar"
@@ -19,106 +19,26 @@
         android:orientation="vertical"
         android:layout_marginTop="?attr/actionBarSize">
 
-        <android.support.v7.widget.RecyclerView
+        <com.vjmartinez.petagram.AutoFitRecyclerView
             android:id="@+id/rv_menu_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/basic_margin"
-            />
+            android:columnWidth="@dimen/menu_item_width"
+            android:clipToPadding="false"
+            android:layout_gravity="center|top"/>
 
-         <!--   <LinearLayout android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:layout_margin="@dimen/basic_margin"
-                android:id="@+id/mainGV">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <LinearLayout
-                        android:layout_width="@dimen/menu_item_width"
-                        android:layout_height="@dimen/menu_item_height"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_margin="@dimen/basic_margin">
-
-                        <ImageView
-                            android:id="@+id/iconLogin"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/cs_login_icon" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/login"
-                            android:gravity="center_horizontal"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="@dimen/menu_item_width"
-                        android:layout_height="@dimen/menu_item_height"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_margin="@dimen/basic_margin">
-
-                        <ImageView
-                            android:id="@+id/iconSignIn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/evelauncher_icon" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/singin"
-                            android:gravity="center_horizontal"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="@dimen/basic_margin"
-                    android:gravity="center">
-                    <LinearLayout
-                        android:layout_width="@dimen/menu_item_width"
-                        android:layout_height="@dimen/menu_item_height"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical"
-                        android:layout_margin="@dimen/basic_margin">
-                        <ImageView
-                            android:id="@+id/iconUsersList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/d_feet_icon"
-                            android:layout_gravity="center"
-                            />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/see_users"
-                            android:gravity="center_horizontal"/>
-                    </LinearLayout>
-                </LinearLayout>-->
-
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/basic_margin"
-                    android:src="@drawable/star"
-                    android:id="@+id/flaButtonMainPage"
-                    android:padding="@dimen/layout_padding"
-                    android:layout_gravity="bottom|right"
-                    >
-                </android.support.design.widget.FloatingActionButton>
-
-           <!-- </LinearLayout>-->
 
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/basic_margin"
+        android:src="@drawable/star"
+        android:id="@+id/flaButtonMainPage"
+        android:layout_margin="@dimen/layout_padding"
+        android:layout_gravity="bottom|right"
+        >
+    </android.support.design.widget.FloatingActionButton>
+
 </android.support.design.widget.CoordinatorLayout>

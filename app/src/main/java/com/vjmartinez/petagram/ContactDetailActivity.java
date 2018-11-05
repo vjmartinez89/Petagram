@@ -90,6 +90,7 @@ public class ContactDetailActivity extends PetagramActivity {
                 goBack();
             }
         });
+        actionBar.setTitleTextColor(getResources().getColor(R.color.titleColor));
     }
 
     /**

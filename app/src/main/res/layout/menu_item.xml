@@ -4,17 +4,21 @@
             android:layout_width="@dimen/menu_item_width"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_margin="@dimen/basic_margin">
-
+            android:layout_margin="@dimen/basic_margin"
+            android:background="@drawable/bordered_background"
+            >
     <ImageView
         android:id="@+id/ic_menu_item"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
     <TextView
         android:id="@+id/tvi_menu_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/menu_item_text_size"
         android:text=""
-        android:gravity="center_horizontal"/>
+        android:textColor="@color/textColor"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal|bottom"/>
 </LinearLayout>

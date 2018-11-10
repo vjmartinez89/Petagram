@@ -38,4 +38,9 @@
     <string name="birthday_mandatory">El campo Fecha de nacimiento es obligatorio</string>
     <string name="phone_mandatory">El campo Teléfono es obligatorio</string>
     <string name="email_mandatory">El campo Email es obligatorio</string>
+
+    <!-- Menu options -->
+    <string name="mi_about">Acerca de</string>
+    <string name="mi_settings">Configuraciones</string>
+    <string name="mi_exit">Salir</string>
 </resources>

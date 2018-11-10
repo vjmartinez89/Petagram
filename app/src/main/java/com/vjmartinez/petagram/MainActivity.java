@@ -12,6 +12,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -22,59 +23,38 @@ public class MainActivity extends PetagramActivity {
 
     Toolbar actionBar = null;
     RecyclerView menuItemList;
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initComponents();
+        init();
     }
 
     /**
      * Initialize the activity components
      */
-    private void initComponents() {
+    @Override
+    public void initComponents() {
         actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
         setSupportActionBar(actionBar);
-        initMenu();
-    }
-
-    /**
-     * Initialize the menu
-     */
-    private void initMenu() {
 
         menuItemList = (RecyclerView) findViewById(R.id.rv_menu_items);
-      /*  GridLayoutManager gridLayoutManager =  new GridLayoutManager( this,
-                2);
-        menuItemList.setLayoutManager(gridLayoutManager);*/
         menuItemList.setHasFixedSize(true);
+
+        floatingActionButton = (FloatingActionButton)findViewById(R.id.flaButtonMainPage);
+    }
+
+    @Override
+    public void initAdapters() {
+        super.initAdapters();
         menuItemList.setAdapter(new MenuItemAdapter(getMenuItems(), this));
-        initFloatingActionButton();
     }
 
-    /**
-     * Create an return the menu item list
-     * @return
-     */
-    private List<MenuItem> getMenuItems() {
-        List<MenuItem> menuItems = new ArrayList<>();
-        try {
-            menuItems.add(new MenuItem(getResources().getString(R.string.login), R.drawable.ic_login_48, null));
-            menuItems.add(new MenuItem(getResources().getString(R.string.singin), R.drawable.ic_sign_in_48, SignInStep1Activity.class));
-            menuItems.add(new MenuItem(getResources().getString(R.string.see_users), R.drawable.ic_users_list, ContactListActivity.class));
-        }catch (Exception ex)
-        {
-            Log.e("ERROR", "Error creating menu "+ex.getMessage(), ex);
-        }
-        return menuItems;
-    }
-
-    /**
-     *
-     */
-    private void initFloatingActionButton(){
-        FloatingActionButton floatingActionButton = (FloatingActionButton)findViewById(R.id.flaButtonMainPage);
+    @Override
+    public void initEvents() {
+        super.initEvents();
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +76,25 @@ public class MainActivity extends PetagramActivity {
             }
         });
     }
+
+    /**
+     * Create an return the menu item list
+     * @return
+     */
+    private List<MenuItem> getMenuItems() {
+        List<MenuItem> menuItems = new ArrayList<>();
+        try {
+            menuItems.add(new MenuItem(getResources().getString(R.string.login), R.drawable.ic_login_48, null));
+            menuItems.add(new MenuItem(getResources().getString(R.string.singin), R.drawable.ic_sign_in_48, SignInStep1Activity.class));
+            menuItems.add(new MenuItem(getResources().getString(R.string.see_users), R.drawable.ic_users_list, ContactListActivity.class));
+        }catch (Exception ex)
+        {
+            Log.e("ERROR", "Error creating menu "+ex.getMessage(), ex);
+        }
+        return menuItems;
+    }
+
+
 
     /**
      * On back button confirm and close app
@@ -134,5 +133,29 @@ public class MainActivity extends PetagramActivity {
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    //Initialize options menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu); //Inflate our menu
+        return true;
+    }
+
+    //When user select a menu option
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.mi_about:
+                go(AboutActivity.class, null, true);
+                break;
+            case R.id.mi_settings:
+                go(SettingsActivity.class, null, true);
+                break;
+            case R.id.mi_exit:
+                closeApplication();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

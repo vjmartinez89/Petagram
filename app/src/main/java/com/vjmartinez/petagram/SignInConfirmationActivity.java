@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.text.SimpleDateFormat;
 
-public class SignInConfirmationActivity extends AppCompatActivity {
+public class SignInConfirmationActivity extends PetagramActivity {
 
     private TextView tviContactName;
     private TextView tviContactBirthday;
@@ -31,7 +31,7 @@ public class SignInConfirmationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_confirmation);
 
-        initComponents();
+        init();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && !extras.isEmpty()) {
@@ -49,27 +49,11 @@ public class SignInConfirmationActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Set object data to form views
-     * @param contact
-     */
-    private void setFormData(Contact contact) {
-
-        tviContactName.setText(contact.getName());
-        tviContactBirthday.setText(new SimpleDateFormat("dd/MM/yyyy")
-                .format(contact.getBirthDate()));
-        tviContactSex.setText( "M".equalsIgnoreCase(contact.getSex()) ?
-                getResources().getString(R.string.man) :
-                getResources().getString(R.string.woman));
-        tviContactPhone.setText(contact.getPhone());
-        tviContactEmail.setText(contact.getEmail());
-        tviContactAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
-    }
-
     /***
      * Init the basic components of Activity
      */
-    private void initComponents() {
+    @Override
+    public void initComponents() {
         //TextView initialization
         tviContactName = (TextView) findViewById(R.id.tvi_contact_name);
         tviContactBirthday = (TextView) findViewById(R.id.tvi_contact_birthday);
@@ -90,6 +74,16 @@ public class SignInConfirmationActivity extends AppCompatActivity {
         setSupportActionBar(actionBar);
         //Set support for previous action bar button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void initAdapters() {
+        super.initAdapters();
+    }
+
+    @Override
+    public void initEvents() {
+        super.initEvents();
         //Intercepts the click event on arrow back button in action bar
         actionBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,19 +111,17 @@ public class SignInConfirmationActivity extends AppCompatActivity {
      * Go to previous activity
      */
     private void goBack(){
-        Intent i = new Intent(this, SignInStep1Activity.class);
         Contact contact = getFormData();
         ObjectMapper objectMapper = new ObjectMapper();
+        Bundle extras = new Bundle();
         try {
-            i.putExtra("CONTACT_OBJECT", objectMapper.writeValueAsString(contact));
+            extras.putString("CONTACT_OBJECT", objectMapper.writeValueAsString(contact));
         }catch(Exception jse){
-            i.putExtra("CONTACT_OBJECT", "" );
+            extras.putString("CONTACT_OBJECT", "" );
             Log.e("Error", jse.getMessage(), jse);
         }
-        startActivity(i);
-        finish();
+        go(SignInStep1Activity.class, extras,true);
     }
-
 
     /**
      * Create a Contact object from Form data
@@ -153,4 +145,23 @@ public class SignInConfirmationActivity extends AppCompatActivity {
         }
         return null;
     }
+
+
+    /**
+     * Set object data to form views
+     * @param contact
+     */
+    private void setFormData(Contact contact) {
+
+        tviContactName.setText(contact.getName());
+        tviContactBirthday.setText(new SimpleDateFormat("dd/MM/yyyy")
+                .format(contact.getBirthDate()));
+        tviContactSex.setText( "M".equalsIgnoreCase(contact.getSex()) ?
+                getResources().getString(R.string.man) :
+                getResources().getString(R.string.woman));
+        tviContactPhone.setText(contact.getPhone());
+        tviContactEmail.setText(contact.getEmail());
+        tviContactAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
+    }
+
 }

@@ -54,10 +54,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuIt
         menuItemViewHolder.itemIcon.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if(menuItem.getOpenActivityClass() != null) {
-                    Intent i = new Intent(activity, menuItem.getOpenActivityClass());
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    activity.startActivity(i);
-                    activity.finish(); //Finish Main Activity
+                    activity.go(menuItem.getOpenActivityClass(), null, true);
                 }else{
                     MessageUtil.showAlertDialog(activity, activity.getResources().getString(R.string.error),
                             "Destination activity is not found!");

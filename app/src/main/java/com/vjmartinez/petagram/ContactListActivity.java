@@ -30,23 +30,23 @@ public class ContactListActivity extends PetagramActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
+        init();
+    }
 
+    @Override
+    public void initComponents() {
+        super.initComponents();
         actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
         setSupportActionBar(actionBar);
         //Set support for previous action bar button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //Intercepts the click event on arrow back button in action bar
-        actionBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
-
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshMain);
-
         contacList = (RecyclerView) findViewById(R.id.rvContactList);
+    }
 
+    @Override
+    public void initAdapters() {
+        super.initAdapters();
         /*We can use GridLayoutManager to see list in grid view
              GridLayoutManager gridLayoutManager =  new GridLayoutManager( this, 2);
         */
@@ -55,6 +55,18 @@ public class ContactListActivity extends PetagramActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         contacList.setLayoutManager(linearLayoutManager);
         contacList.setAdapter(new ContactDetailAdapter(getContactList(), this));
+    }
+
+    @Override
+    public void initEvents() {
+        super.initEvents();
+        //Intercepts the click event on arrow back button in action bar
+        actionBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -118,10 +130,11 @@ public class ContactListActivity extends PetagramActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * Go to previous activity
+     */
     private void goBack() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        go(MainActivity.class, null, true);
     }
 
 }

@@ -38,18 +38,7 @@ public class ContactDetailActivity extends PetagramActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
-
-        textViewName = (TextView) findViewById(R.id.tv_cd_name);
-        textViewPhone = (TextView) findViewById(R.id.tv_cd_phone);
-        textViewEmail = (TextView) findViewById(R.id.tv_cd_email);
-        textViewBirthDate = (TextView) findViewById(R.id.tv_cd_birth_date);
-        textViewSex = (TextView) findViewById(R.id.tv_cd_sex);
-        textViewAddress = (TextView) findViewById(R.id.tv_cd_address);
-        imgContactProfile = (ImageView)findViewById(R.id.img_cd_profile);
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
-
-        rowPhone = (LinearLayout) findViewById(R.id.rowPhone);
-        rowEmail = (LinearLayout) findViewById(R.id.rowEmail);
+        init();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && !extras.isEmpty()) {
@@ -65,7 +54,42 @@ public class ContactDetailActivity extends PetagramActivity {
                 }
             }
         }
+    }
 
+    /**
+     * Initialize view components of the activity
+     */
+    @Override
+    public void initComponents() {
+        super.initComponents();
+
+        textViewName = (TextView) findViewById(R.id.tv_cd_name);
+        textViewPhone = (TextView) findViewById(R.id.tv_cd_phone);
+        textViewEmail = (TextView) findViewById(R.id.tv_cd_email);
+        textViewBirthDate = (TextView) findViewById(R.id.tv_cd_birth_date);
+        textViewSex = (TextView) findViewById(R.id.tv_cd_sex);
+        textViewAddress = (TextView) findViewById(R.id.tv_cd_address);
+        imgContactProfile = (ImageView)findViewById(R.id.img_cd_profile);
+        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+
+        rowPhone = (LinearLayout) findViewById(R.id.rowPhone);
+        rowEmail = (LinearLayout) findViewById(R.id.rowEmail);
+
+        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        setSupportActionBar(actionBar);
+        //Set support for previous action bar button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public void initAdapters() {
+        super.initAdapters();
+    }
+
+    @Override
+    public void initEvents() {
+        super.initEvents();
         rowPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,11 +102,6 @@ public class ContactDetailActivity extends PetagramActivity {
                 sendMail(v);
             }
         });
-
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
-        setSupportActionBar(actionBar);
-        //Set support for previous action bar button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //Intercepts the click event on arrow back button in action bar
         actionBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +109,6 @@ public class ContactDetailActivity extends PetagramActivity {
                 goBack();
             }
         });
-        actionBar.setTitleTextColor(getResources().getColor(R.color.titleColor));
     }
 
     /**
@@ -147,9 +165,7 @@ public class ContactDetailActivity extends PetagramActivity {
      * Go back
      */
     private void goBack() {
-        Intent intent = new Intent(this, ContactListActivity.class);
-        startActivity(intent);
-        finish();
+        go(ContactListActivity.class, null, true);
     }
 
 

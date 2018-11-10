@@ -2,6 +2,7 @@ package com.vjmartinez.petagram;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -63,16 +64,15 @@ public class ContactDetailAdapter
         //Onclick event on user profile image
         contactDetailViewHolder.imgContactProfile.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Intent i = new Intent(activity, ContactDetailActivity.class);
                 ObjectMapper objectMapper = new ObjectMapper();
+                Bundle extras = new Bundle();
                 try {
-                    i.putExtra("CONTACT_OBJECT", objectMapper.writeValueAsString(contact));
+                    extras.putString("CONTACT_OBJECT", objectMapper.writeValueAsString(contact));
                 }catch(Exception jse){
-                    i.putExtra("CONTACT_OBJECT", "" );
+                    extras.putString("CONTACT_OBJECT", "" );
                     Log.e("Error", jse.getMessage(), jse);
                 }
-                activity.startActivity(i);
-                activity.finish(); //Finish Contact List Activity
+                activity.go(ContactDetailActivity.class, extras, true);
             }
         });
 

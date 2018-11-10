@@ -1,6 +1,7 @@
 package com.vjmartinez.petagram;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -9,10 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * The base Activity class
  */
-public class PetagramActivity extends AppCompatActivity {
+public class PetagramActivity extends AppCompatActivity implements IPetragramActivity{
 
     protected final int PERMISSIONS_REQUEST_CALL = 10000;
 
@@ -117,5 +120,46 @@ public class PetagramActivity extends AppCompatActivity {
     protected void requestPermission(String permissionName, int permissionRequestCode) {
         ActivityCompat.requestPermissions(this,
                 new String[]{permissionName}, permissionRequestCode);
+    }
+
+    /**
+     * Navigate to other activity
+     * @param destination, The class of destination activity
+     * @param extras, The extras to set in the intent
+     * @param finishBeforeGo, Finish this activity before start the new (?)
+     */
+    protected void go(Class destination, Bundle extras, boolean finishBeforeGo){
+        Intent i = new Intent(this, destination);
+        if(extras != null ){
+            i.putExtras(extras);
+        }
+        startActivity(i);
+        if(finishBeforeGo) {
+            finish();
+        }
+    }
+
+    @Override
+    public void initComponents() {
+        //Implement this method in child classes
+    }
+
+    @Override
+    public void initAdapters() {
+        //Implement this method in child classes
+    }
+
+    @Override
+    public void initEvents() {
+        //Implement this method in child classes
+    }
+
+    /**
+     * Execute initComponents, initAdapters and initEvents methods
+     */
+    public void init(){
+        initComponents();
+        initAdapters();
+        initEvents();
     }
 }

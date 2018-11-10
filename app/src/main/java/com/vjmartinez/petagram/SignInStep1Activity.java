@@ -42,7 +42,7 @@ public class SignInStep1Activity extends PetagramActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_step1);
 
-        initComponents();
+        init();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && !extras.isEmpty()) {
@@ -62,31 +62,12 @@ public class SignInStep1Activity extends PetagramActivity {
         }
     }
 
-    /**
-     * Set object data to form components
-     * @param contact
-     */
-    private void setFormData(Contact contact) {
-
-        txiCompleteName.setText(contact.getName());
-        txiBirthDate.setText(new SimpleDateFormat("dd/MM/yyyy")
-                .format(contact.getBirthDate()));
-        if("M".equalsIgnoreCase(contact.getSex())){
-            rbMan.setChecked(true);
-        }else{
-            rbWoman.setChecked(true);
-        }
-        txiPhone.setText(contact.getPhone());
-        txiEmail.setText(contact.getEmail());
-        txiContactAddress.setText(StringUtils.nvl(contact.getAddress(),
-                ""));
-
-    }
 
     /***
      * Init the basic components of Activity
      */
-    private void initComponents() {
+    @Override
+    public void initComponents() {
         //Input initialization
         txiCompleteName = (TextInputEditText)findViewById(R.id.txiCompleteName);
         txiBirthDate = (TextInputEditText)findViewById(R.id.txiBirthDate);
@@ -97,6 +78,20 @@ public class SignInStep1Activity extends PetagramActivity {
         rbMan = (RadioButton)findViewById( R.id.radio_man);
         rbWoman = (RadioButton)findViewById( R.id.radio_woman);
 
+        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        setSupportActionBar(actionBar);
+        //Set support for previous action bar button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void initAdapters() {
+        super.initAdapters();
+    }
+
+    @Override
+    public void initEvents() {
+        super.initEvents();
         //Date picker dialog click
         txiBirthDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,10 +141,6 @@ public class SignInStep1Activity extends PetagramActivity {
             }
         });
 
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
-        setSupportActionBar(actionBar);
-        //Set support for previous action bar button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //Intercepts the click event on arrow back button in action bar
         actionBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +150,26 @@ public class SignInStep1Activity extends PetagramActivity {
         });
     }
 
+    /**
+     * Set object data to form components
+     * @param contact
+     */
+    private void setFormData(Contact contact) {
+
+        txiCompleteName.setText(contact.getName());
+        txiBirthDate.setText(new SimpleDateFormat("dd/MM/yyyy")
+                .format(contact.getBirthDate()));
+        if("M".equalsIgnoreCase(contact.getSex())){
+            rbMan.setChecked(true);
+        }else{
+            rbWoman.setChecked(true);
+        }
+        txiPhone.setText(contact.getPhone());
+        txiEmail.setText(contact.getEmail());
+        txiContactAddress.setText(StringUtils.nvl(contact.getAddress(),
+                ""));
+
+    }
 
     /**
      * Create a Contact object from Form data
@@ -231,9 +242,10 @@ public class SignInStep1Activity extends PetagramActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * Go to the previous activity
+     */
     private void goBack() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        go(MainActivity.class, null, true);
     }
 }

@@ -10,7 +10,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,17 +24,17 @@ import java.text.SimpleDateFormat;
 
 public class ContactDetailActivity extends PetagramActivity {
 
-    TextView textViewName;
-    TextView textViewPhone;
-    TextView textViewEmail;
-    TextView textViewBirthDate;
-    TextView textViewSex;
-    TextView textViewAddress;
-    ImageView imgContactProfile;
+    private TextView textViewName;
+    private TextView textViewPhone;
+    private TextView textViewEmail;
+    private TextView textViewBirthDate;
+    private TextView textViewSex;
+    private TextView textViewAddress;
+    private ImageView imgContactProfile;
     private Toolbar actionBar = null;
 
-    LinearLayout rowPhone;
-    LinearLayout rowEmail;
+    private LinearLayout rowPhone;
+    private LinearLayout rowEmail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +72,7 @@ public class ContactDetailActivity extends PetagramActivity {
         textViewSex = (TextView) findViewById(R.id.tv_cd_sex);
         textViewAddress = (TextView) findViewById(R.id.tv_cd_address);
         imgContactProfile = (ImageView)findViewById(R.id.img_cd_profile);
+        registerForContextMenu(imgContactProfile); //Enable context menu in image view
         actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
 
         rowPhone = (LinearLayout) findViewById(R.id.rowPhone);
@@ -188,5 +191,30 @@ public class ContactDetailActivity extends PetagramActivity {
         textViewPhone.setText(contact.getPhone());
         textViewEmail.setText(contact.getEmail());
         textViewAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
+    }
+
+    //Using context menu
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if(v.getId() == R.id.img_cd_profile){
+            getMenuInflater().inflate(R.menu.context_menu_profile_picture, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.mi_choose_picture:
+                showToast("Seleccione una foto desde el dispositivo");
+                break;
+            case R.id.mi_take_picture:
+                showToast("Abrir la camara para tomar una foto");
+                break;
+            case R.id.mi_delete:
+                showToast("Se eliminará la foto de perfil del usuario");
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 }

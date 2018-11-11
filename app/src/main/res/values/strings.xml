@@ -38,9 +38,18 @@
     <string name="birthday_mandatory">El campo Fecha de nacimiento es obligatorio</string>
     <string name="phone_mandatory">El campo Teléfono es obligatorio</string>
     <string name="email_mandatory">El campo Email es obligatorio</string>
+    <string name="msg_like">Diste like a</string>
+    <string name="msg_love">Diste me encanta a</string>
 
     <!-- Menu options -->
     <string name="mi_about">Acerca de</string>
     <string name="mi_settings">Configuraciones</string>
     <string name="mi_exit">Salir</string>
+    <string name="mi_delete">Eliminar</string>
+    <string name="mi_choose_picture">Seleccionar foto</string>
+    <string name="mi_take_picture">Tomar foto</string>
+    <string name="mi_see">Ver</string>
+    <string name="mi_see_details">Ver detalles</string>
+    <string name="mi_like">Me gusta</string>
+    <string name="mi_love">Me encanta</string>
 </resources>

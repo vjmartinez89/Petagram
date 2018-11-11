@@ -8,11 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,11 +78,33 @@ public class ContactDetailAdapter
             }
         });
 
-        //Onclick event on user like button
+        //Onclick event on user like button (Using popup menu)
         contactDetailViewHolder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.showToast("Diste like a "+contact.getName());
+                PopupMenu popupMenu =  new PopupMenu(activity, v);
+                popupMenu.getMenuInflater().inflate(R.menu.pop_up_menu, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.mi_like:
+                                activity.showToast(activity.getResources()
+                                        .getString(R.string.msg_like)+" "+contact.getName());
+                                break;
+                            case R.id.mi_love:
+                                activity.showToast(activity.getResources()
+                                        .getString(R.string.msg_love)+" "+contact.getName());
+                                break;
+                        }
+                        return true;
+                    }
+                });
+
+                popupMenu.show();
+
+
             }
         });
     }
@@ -115,6 +139,7 @@ public class ContactDetailAdapter
             tviCardviewContactEmail = (TextView)itemView.findViewById(R.id
                     .tvi_cardview_contact_email);
             btnLike = (ImageButton)itemView.findViewById(R.id.btnLike);
+
         }
 
     }

@@ -17,7 +17,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class PetagramActivity extends AppCompatActivity implements IPetragramActivity{
 
-    protected final int PERMISSIONS_REQUEST_CALL = 10000;
+    protected static final int PERMISSIONS_REQUEST_CALL = 10000;
+    protected static final int PICK_IMAGE = 10001;
+    protected static final int REQUEST_IMAGE_CAPTURE = 10002;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -33,6 +33,10 @@
     <string name="sex">Sexo</string>
     <string name="man">Hombre</string>
     <string name="woman">Mujer</string>
+
+    <!--Contact detail -->
+    <string name="select_image">Seleccione una imagen</string>
+
     <!-- Messages -->
     <string name="name_mandatory">El campo Nombre es obligatorio</string>
     <string name="birthday_mandatory">El campo Fecha de nacimiento es obligatorio</string>
@@ -40,6 +44,7 @@
     <string name="email_mandatory">El campo Email es obligatorio</string>
     <string name="msg_like">Diste like a</string>
     <string name="msg_love">Diste me encanta a</string>
+    <string name="generic_error">Error general</string>
 
     <!-- Menu options -->
     <string name="mi_about">Acerca de</string>

@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vjmartinez.petagram">
 
+    <!-- Permission for use call phone -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!-- Permission for use camera -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
 
     <application
         android:allowBackup="true"

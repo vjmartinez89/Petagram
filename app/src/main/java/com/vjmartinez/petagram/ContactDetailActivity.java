@@ -3,8 +3,10 @@ package com.vjmartinez.petagram;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +37,8 @@ public class ContactDetailActivity extends PetagramActivity {
 
     private LinearLayout rowPhone;
     private LinearLayout rowEmail;
+
+    private Uri imageUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -206,15 +210,65 @@ public class ContactDetailActivity extends PetagramActivity {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.mi_choose_picture:
-                showToast("Seleccione una foto desde el dispositivo");
+                openGallery();
                 break;
             case R.id.mi_take_picture:
-                showToast("Abrir la camara para tomar una foto");
+                //TODO: Verify camera hardware existence
+                dispatchTakePictureIntent();
                 break;
             case R.id.mi_delete:
                 showToast("Se eliminará la foto de perfil del usuario");
                 break;
         }
         return super.onContextItemSelected(item);
+    }
+
+    /**
+     * Open Gallery for select a picture
+     */
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(gallery, getResources()
+                .getString(R.string.select_image)), PICK_IMAGE);
+    }
+
+    /**
+     * Open camera to take a photo
+     */
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    /**
+     * Capture activity results
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+
+        if(resultCode == RESULT_OK){
+
+            //Pick an image from gallery
+            if(requestCode == PICK_IMAGE){
+                imageUri = data.getData();
+                imgContactProfile.setImageURI(imageUri);
+            }
+
+            //Take a photo with camera
+            if (requestCode == REQUEST_IMAGE_CAPTURE ) {
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                imgContactProfile.setImageBitmap(imageBitmap);
+            }
+        }/*else{
+            MessageUtil.showAlertDialog(this, getResources().getString(R.string.error),
+                    getResources().getString(R.string.generic_error));
+        }*/
+
     }
 }

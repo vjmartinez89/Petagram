@@ -155,6 +155,9 @@ public class MainActivity extends PetagramActivity {
             case R.id.mi_exit:
                 closeApplication();
                 break;
+            case R.id.mi_refresh:
+                showToast("Contenido actualizado");
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

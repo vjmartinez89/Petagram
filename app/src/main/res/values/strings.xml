@@ -45,6 +45,8 @@
     <string name="msg_like">Diste like a</string>
     <string name="msg_love">Diste me encanta a</string>
     <string name="generic_error">Error general</string>
+    <string name="no_image_selected">Ninguna imágen seleccionada</string>
+    <string name="no_photo_taken">No se ha tomado ninguna foto</string>
 
     <!-- Menu options -->
     <string name="mi_about">Acerca de</string>
@@ -57,4 +59,5 @@
     <string name="mi_see_details">Ver detalles</string>
     <string name="mi_like">Me gusta</string>
     <string name="mi_love">Me encanta</string>
+    <string name="mi_refresh">Refrescar</string>
 </resources>

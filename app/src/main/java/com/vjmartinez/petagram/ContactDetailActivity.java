@@ -250,25 +250,29 @@ public class ContactDetailActivity extends PetagramActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-
         if(resultCode == RESULT_OK){
-
-            //Pick an image from gallery
-            if(requestCode == PICK_IMAGE){
-                imageUri = data.getData();
-                imgContactProfile.setImageURI(imageUri);
+            switch(requestCode){
+                case PICK_IMAGE: //Pick an image from gallery
+                    imageUri = data.getData();
+                    imgContactProfile.setImageURI(imageUri);
+                    break;
+                case REQUEST_IMAGE_CAPTURE: //Take a photo with camera
+                    Bundle extras = data.getExtras();
+                    Bitmap imageBitmap = (Bitmap) extras.get("data");
+                    imgContactProfile.setImageBitmap(imageBitmap);
+                    break;
             }
-
-            //Take a photo with camera
-            if (requestCode == REQUEST_IMAGE_CAPTURE ) {
-                Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                imgContactProfile.setImageBitmap(imageBitmap);
+        }else{
+            switch(requestCode) {
+                case PICK_IMAGE:
+                    MessageUtil.showAlertDialog(this, getResources().getString(R.string.error),
+                            getResources().getString(R.string.no_image_selected));
+                    break;
+                case REQUEST_IMAGE_CAPTURE:
+                    MessageUtil.showAlertDialog(this, getResources().getString(R.string.error),
+                            getResources().getString(R.string.no_photo_taken));
+                    break;
             }
-        }/*else{
-            MessageUtil.showAlertDialog(this, getResources().getString(R.string.error),
-                    getResources().getString(R.string.generic_error));
-        }*/
-
+        }
     }
 }

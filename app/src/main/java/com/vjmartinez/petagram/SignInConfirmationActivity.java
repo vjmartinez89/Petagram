@@ -1,9 +1,6 @@
 package com.vjmartinez.petagram;
 
-import android.content.Intent;
 import android.support.design.button.MaterialButton;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,8 +9,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vjmartinez.petagram.dto.Contact;
+import com.vjmartinez.petagram.utils.StringUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class SignInConfirmationActivity extends PetagramActivity {
 
@@ -55,13 +55,13 @@ public class SignInConfirmationActivity extends PetagramActivity {
     @Override
     public void initComponents() {
         //TextView initialization
-        tviContactName = (TextView) findViewById(R.id.tvi_contact_name);
-        tviContactBirthday = (TextView) findViewById(R.id.tvi_contact_birthday);
-        tviContactSex = (TextView)findViewById(R.id.tvi_contact_sex);
-        tviContactPhone = (TextView) findViewById(R.id.tvi_contact_phone);
-        tviContactEmail = (TextView) findViewById(R.id.tvi_contact_email);
-        tviContactAddress = (TextView) findViewById(R.id.tvi_contact_address);
-        btnSingInBack = (MaterialButton) findViewById(R.id.btn_sing_in_back);
+        tviContactName = findViewById(R.id.tvi_contact_name);
+        tviContactBirthday = findViewById(R.id.tvi_contact_birthday);
+        tviContactSex = findViewById(R.id.tvi_contact_sex);
+        tviContactPhone = findViewById(R.id.tvi_contact_phone);
+        tviContactEmail = findViewById(R.id.tvi_contact_email);
+        tviContactAddress = findViewById(R.id.tvi_contact_address);
+        btnSingInBack = findViewById(R.id.btn_sing_in_back);
 
         btnSingInBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,10 +70,12 @@ public class SignInConfirmationActivity extends PetagramActivity {
             }
         });
 
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        actionBar = findViewById(R.id.mainAcionBar);
         setSupportActionBar(actionBar);
         //Set support for previous action bar button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -95,9 +97,9 @@ public class SignInConfirmationActivity extends PetagramActivity {
 
     /**
      * Go to Main Activity when user touch back button
-     * @param keyCode
-     * @param event
-     * @return
+     * @param keyCode the key code
+     * @param event the event object
+     * @return boolean flag
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -125,7 +127,7 @@ public class SignInConfirmationActivity extends PetagramActivity {
 
     /**
      * Create a Contact object from Form data
-     * @return
+     * @return A contact object with form information
      */
     private Contact getFormData() {
         try {
@@ -134,7 +136,8 @@ public class SignInConfirmationActivity extends PetagramActivity {
                     tviContactPhone.getText().toString(),
                     tviContactEmail.getText().toString(),
                     R.drawable.ic_user_male,
-                    (new SimpleDateFormat("dd/MM/yyyy")).parse(tviContactBirthday.getText()
+                    (new SimpleDateFormat("dd/MM/yyyy", new Locale("es_CO")))
+                            .parse(tviContactBirthday.getText()
                             .toString()),
                     getResources().getString(R.string.man).equalsIgnoreCase(tviContactSex.getText()
                             .toString()) ? "M" : "F",
@@ -149,12 +152,13 @@ public class SignInConfirmationActivity extends PetagramActivity {
 
     /**
      * Set object data to form views
-     * @param contact
+     * @param contact The contact object
      */
     private void setFormData(Contact contact) {
 
         tviContactName.setText(contact.getName());
-        tviContactBirthday.setText(new SimpleDateFormat("dd/MM/yyyy")
+        tviContactBirthday.setText(new SimpleDateFormat("dd/MM/yyyy",
+                new Locale("es_CO"))
                 .format(contact.getBirthDate()));
         tviContactSex.setText( "M".equalsIgnoreCase(contact.getSex()) ?
                 getResources().getString(R.string.man) :

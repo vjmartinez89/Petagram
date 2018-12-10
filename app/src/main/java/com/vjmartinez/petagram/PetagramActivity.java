@@ -4,13 +4,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vjmartinez.petagram.utils.MessageUtil;
 
 /**
  * The base Activity class
@@ -66,22 +67,22 @@ public class PetagramActivity extends AppCompatActivity implements IPetragramAct
 
     /**
      * Show a Toast message
-     * @param message
+     * @param message The message text to show in toast
      */
-    protected void showToast(String message){
+    public void showToast(String message){
         MessageUtil.showToast(getBaseContext(),message, Toast.LENGTH_LONG);
     }
 
     /**
      * Process user response for request permission
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
+     * @param requestCode The request code
+     * @param permissions The permissions array
+     * @param grantResults The gran results array
      */
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[],
-                                           int[] grantResults) {
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSIONS_REQUEST_CALL:
                 if (grantResults.length > 0
@@ -95,10 +96,10 @@ public class PetagramActivity extends AppCompatActivity implements IPetragramAct
 
     /**
      * Show explanation message to user
-     * @param title
-     * @param message
-     * @param permission
-     * @param permissionRequestCode
+     * @param title The title of the explanation
+     * @param message The text message of the explanation
+     * @param permission The permission
+     * @param permissionRequestCode The request code
      */
     protected void showExplanation(String title,
                                  String message,
@@ -117,8 +118,8 @@ public class PetagramActivity extends AppCompatActivity implements IPetragramAct
 
     /**
      * Request user permission
-     * @param permissionName
-     * @param permissionRequestCode
+     * @param permissionName The permission name
+     * @param permissionRequestCode The request code
      */
     protected void requestPermission(String permissionName, int permissionRequestCode) {
         ActivityCompat.requestPermissions(this,
@@ -131,7 +132,7 @@ public class PetagramActivity extends AppCompatActivity implements IPetragramAct
      * @param extras, The extras to set in the intent
      * @param finishBeforeGo, Finish this activity before start the new (?)
      */
-    protected void go(Class destination, Bundle extras, boolean finishBeforeGo){
+    public void go(Class destination, Bundle extras, boolean finishBeforeGo){
         Intent i = new Intent(this, destination);
         if(extras != null ){
             i.putExtras(extras);

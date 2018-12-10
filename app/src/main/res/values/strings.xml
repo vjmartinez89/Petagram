@@ -60,4 +60,10 @@
     <string name="mi_like">Me gusta</string>
     <string name="mi_love">Me encanta</string>
     <string name="mi_refresh">Refrescar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mi_contact">Contactar</string>
+    <string name="comment">Comentario</string>
+    <string name="send">Enviar</string>
 </resources>

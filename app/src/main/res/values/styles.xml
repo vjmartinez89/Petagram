@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_24dp</item>
         <item name="android:actionOverflowButtonStyle">@style/CustomOverFlow</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
     
     <style name="raisedButton" parent="Theme.AppCompat.Light">

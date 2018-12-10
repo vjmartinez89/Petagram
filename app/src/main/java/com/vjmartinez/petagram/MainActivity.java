@@ -1,20 +1,19 @@
 package com.vjmartinez.petagram;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ImageView;
+
+import com.vjmartinez.petagram.adapter.MenuItemAdapter;
+import com.vjmartinez.petagram.dto.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +36,13 @@ public class MainActivity extends PetagramActivity {
      */
     @Override
     public void initComponents() {
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        actionBar = findViewById(R.id.mainAcionBar);
         setSupportActionBar(actionBar);
 
-        menuItemList = (RecyclerView) findViewById(R.id.rv_menu_items);
+        menuItemList = findViewById(R.id.rv_menu_items);
         menuItemList.setHasFixedSize(true);
 
-        floatingActionButton = (FloatingActionButton)findViewById(R.id.flaButtonMainPage);
+        floatingActionButton = findViewById(R.id.flaButtonMainPage);
     }
 
     @Override
@@ -79,7 +78,7 @@ public class MainActivity extends PetagramActivity {
 
     /**
      * Create an return the menu item list
-     * @return
+     * @return The list of menu items
      */
     private List<MenuItem> getMenuItems() {
         List<MenuItem> menuItems = new ArrayList<>();
@@ -98,9 +97,9 @@ public class MainActivity extends PetagramActivity {
 
     /**
      * On back button confirm and close app
-     * @param keyCode
-     * @param event
-     * @return
+     * @param keyCode The key code
+     * @param event The event object
+     * @return boolean flag
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -157,6 +156,10 @@ public class MainActivity extends PetagramActivity {
                 break;
             case R.id.mi_refresh:
                 showToast("Contenido actualizado");
+                break;
+
+            case R.id.mi_contact:
+                go(ContactActivity.class, null, true);
                 break;
         }
         return super.onOptionsItemSelected(item);

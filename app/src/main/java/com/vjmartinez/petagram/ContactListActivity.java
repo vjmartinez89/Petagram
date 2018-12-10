@@ -1,30 +1,27 @@
 package com.vjmartinez.petagram;
 
-import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import java.text.SimpleDateFormat;
+import com.vjmartinez.petagram.adapter.PageAdapter;
+import com.vjmartinez.petagram.fragments.ProfileFragment;
+import com.vjmartinez.petagram.fragments.RecyclerViewFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactListActivity extends PetagramActivity {
 
     //Global variables
-    SwipeRefreshLayout swipeRefreshLayout;
-   // ListView contactList;
-    Adapter adapter;
-    RecyclerView contacList;
-    private Toolbar actionBar = null;
+  //  private Toolbar actionBar = null;
+    private Toolbar toolBar = null;
+    private TabLayout tabLayout = null;
+    private ViewPager viewPager = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,91 +33,44 @@ public class ContactListActivity extends PetagramActivity {
     @Override
     public void initComponents() {
         super.initComponents();
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
-        setSupportActionBar(actionBar);
+     //   actionBar =  findViewById(R.id.mainAcionBar);
+        toolBar =  findViewById(R.id.toolBar);
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
+        if(toolBar != null){
+            setSupportActionBar(toolBar);
+        }
         //Set support for previous action bar button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshMain);
-        contacList = (RecyclerView) findViewById(R.id.rvContactList);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        setUpViewPager();
     }
 
     @Override
     public void initAdapters() {
         super.initAdapters();
-        /*We can use GridLayoutManager to see list in grid view
-             GridLayoutManager gridLayoutManager =  new GridLayoutManager( this, 2);
-        */
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        contacList.setLayoutManager(linearLayoutManager);
-        contacList.setAdapter(new ContactDetailAdapter(getContactList(), this));
     }
 
     @Override
     public void initEvents() {
         super.initEvents();
         //Intercepts the click event on arrow back button in action bar
-        actionBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshContent();
-            }
-        });
-    }
-
-    /**
-     * Refresh contact list
-     */
-    private void refreshContent(){
-        contacList.setAdapter(new ContactDetailAdapter( getContactList(), this));
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    /**
-     * Get a contact list
-     * @return
-     */
-    private List<Contact> getContactList(){
-        List<Contact> contacts = new ArrayList<>();
-        try {
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            contacts.add(new Contact("Victor Julio Martinez Barrios",
-                    "314 531 6197", "vijumaba89@gmail.com", R.drawable.ic_user_male,
-                    dateFormat.parse("11/08/1989"),
-                    "M", "Car. 59 # 70 - 349"));
-
-            contacts.add(new Contact("Ana Milena Mejia Diaz",
-                    "314 571 3323", "amdiaz220285@gmail.com", R.drawable.ic_user_female,
-                    dateFormat.parse("22/02/1985"),
-                    "F", "Car. 59 # 70 - 349"));
-
-            contacts.add(new Contact("Nicole Martínez Mejía",
-                    "314 531 2131", "nicole102014@gmail.com", R.drawable.ic_user_female,
-                    dateFormat.parse("01/10/2014"),
-                    "F", "Car. 59 # 70 - 349"));
-
-
-        }catch(Exception ex){
-            ex.printStackTrace();
+        if(toolBar!=null) {
+            toolBar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goBack();
+                }
+            });
         }
-        return contacts;
     }
-
 
     /**
      * Go to Main Activity when user touch back button
-     * @param keyCode
-     * @param event
-     * @return
+     * @param keyCode, The key code
+     * @param event, Yhe event information
+     * @return boolean
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -135,6 +85,33 @@ public class ContactListActivity extends PetagramActivity {
      */
     private void goBack() {
         go(MainActivity.class, null, true);
+    }
+
+    /**
+     * Configure
+     */
+    private void setUpViewPager(){
+        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(),getFragmentsList()));
+        tabLayout.setupWithViewPager(viewPager);
+        if( tabLayout.getTabAt(0) != null ) {
+            tabLayout.getTabAt(0).setIcon(R.drawable.ic_action_name);
+        }
+        if( tabLayout.getTabAt(1)!= null ) {
+            tabLayout.getTabAt(1).setIcon(R.drawable.ic_phone_24dp);
+        }
+    }
+
+    /**
+     * Create and return the list of fragments to show
+     * @return The list of fragments
+     */
+    private List<Fragment> getFragmentsList(){
+        List<Fragment> fragments = new ArrayList<>();
+        RecyclerViewFragment recyclerViewFragment = new RecyclerViewFragment();
+        recyclerViewFragment.setPetagramActivity(this);
+        fragments.add(recyclerViewFragment);
+        fragments.add(new ProfileFragment());
+        return fragments;
     }
 
 }

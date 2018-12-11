@@ -172,8 +172,8 @@ public class SignInStep1Activity extends PetagramActivity {
                     (new SimpleDateFormat("dd/MM/yyyy", new Locale("es_CO")))
                             .parse(txiBirthDate.getText().toString()),
                     rbMan.isChecked() ? "M" : "F",
-                    txiContactAddress.getText().toString()
-                    );
+                    txiContactAddress.getText().toString(),
+                    0);
         }catch(Exception e){
             Log.e("Error", e.getMessage(), e);
         }

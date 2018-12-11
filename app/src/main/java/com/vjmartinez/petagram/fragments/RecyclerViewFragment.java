@@ -89,17 +89,17 @@ public class RecyclerViewFragment extends Fragment {
             contacts.add(new Contact("Victor Julio Martinez Barrios",
                     "314 531 6197", "vijumaba89@gmail.com", R.drawable.ic_user_male,
                     dateFormat.parse("11/08/1989"),
-                    "M", "Car. 59 # 70 - 349"));
+                    "M", "Car. 59 # 70 - 349", 5));
 
             contacts.add(new Contact("Ana Milena Mejia Diaz",
                     "314 571 3323", "amdiaz220285@gmail.com", R.drawable.ic_user_female,
                     dateFormat.parse("22/02/1985"),
-                    "F", "Car. 59 # 70 - 349"));
+                    "F", "Car. 59 # 70 - 349", 2));
 
             contacts.add(new Contact("Nicole Martínez Mejía",
                     "314 531 2131", "nicole102014@gmail.com", R.drawable.ic_user_female,
                     dateFormat.parse("01/10/2014"),
-                    "F", "Car. 59 # 70 - 349"));
+                    "F", "Car. 59 # 70 - 349", 10));
 
 
         }catch(Exception ex){

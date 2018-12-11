@@ -59,7 +59,7 @@ public class ContactDetailAdapter
         contactDetailViewHolder.tviCardviewContactName.setText(contact.getName());
         contactDetailViewHolder.tviCardviewContactPhone.setText(contact.getPhone());
         contactDetailViewHolder.tviCardviewContactEmail.setText(contact.getEmail());
-
+        contactDetailViewHolder.tviLikes.setText(String.valueOf(contact.getLikes()));
         //Onclick event on user profile image
         contactDetailViewHolder.imgContactProfile.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -118,6 +118,7 @@ public class ContactDetailAdapter
         private TextView tviCardviewContactPhone;
         private TextView tviCardviewContactEmail;
         private ImageButton btnLike;
+        private TextView tviLikes;
 
         ContactDetailViewHolder(View itemView){
             super(itemView);
@@ -131,8 +132,8 @@ public class ContactDetailAdapter
                     .tvi_cardview_contact_email);
             btnLike = itemView.findViewById(R.id.btnLike);
 
+            tviLikes = itemView.findViewById(R.id.tvi_card_view_contact_likes);
         }
-
     }
 
 }

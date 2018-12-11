@@ -8,7 +8,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vjmartinez.petagram.dto.Contact;
 import com.vjmartinez.petagram.utils.StringUtils;
 
@@ -35,11 +34,9 @@ public class SignInConfirmationActivity extends PetagramActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && !extras.isEmpty()) {
-            if(!StringUtils.isEmpty(extras.getString("CONTACT_OBJECT"))){
+            if(extras.getSerializable("CONTACT_OBJECT") != null){
                 try {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    Contact contact = objectMapper.readValue(extras.getString("CONTACT_OBJECT"),
-                            Contact.class);
+                    Contact contact = (Contact)extras.getSerializable("CONTACT_OBJECT");
                     setFormData(contact);
                 }catch(Exception e){
                     Log.e("Error", e.getMessage(), e);
@@ -114,10 +111,9 @@ public class SignInConfirmationActivity extends PetagramActivity {
      */
     private void goBack(){
         Contact contact = getFormData();
-        ObjectMapper objectMapper = new ObjectMapper();
         Bundle extras = new Bundle();
         try {
-            extras.putString("CONTACT_OBJECT", objectMapper.writeValueAsString(contact));
+            extras.putSerializable("CONTACT_OBJECT", contact);
         }catch(Exception jse){
             extras.putString("CONTACT_OBJECT", "" );
             Log.e("Error", jse.getMessage(), jse);
@@ -141,7 +137,8 @@ public class SignInConfirmationActivity extends PetagramActivity {
                             .toString()),
                     getResources().getString(R.string.man).equalsIgnoreCase(tviContactSex.getText()
                             .toString()) ? "M" : "F",
-                    tviContactAddress.getText().toString()
+                    tviContactAddress.getText().toString(),
+                    0
             );
         }catch(Exception e){
             Log.e("Error", e.getMessage(), e);
@@ -155,17 +152,18 @@ public class SignInConfirmationActivity extends PetagramActivity {
      * @param contact The contact object
      */
     private void setFormData(Contact contact) {
-
-        tviContactName.setText(contact.getName());
-        tviContactBirthday.setText(new SimpleDateFormat("dd/MM/yyyy",
-                new Locale("es_CO"))
-                .format(contact.getBirthDate()));
-        tviContactSex.setText( "M".equalsIgnoreCase(contact.getSex()) ?
-                getResources().getString(R.string.man) :
-                getResources().getString(R.string.woman));
-        tviContactPhone.setText(contact.getPhone());
-        tviContactEmail.setText(contact.getEmail());
-        tviContactAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
+        if(contact != null) {
+            tviContactName.setText(contact.getName());
+            tviContactBirthday.setText(new SimpleDateFormat("dd/MM/yyyy",
+                    new Locale("es_CO"))
+                    .format(contact.getBirthDate()));
+            tviContactSex.setText("M".equalsIgnoreCase(contact.getSex()) ?
+                    getResources().getString(R.string.man) :
+                    getResources().getString(R.string.woman));
+            tviContactPhone.setText(contact.getPhone());
+            tviContactEmail.setText(contact.getEmail());
+            tviContactAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
+        }
     }
 
 }

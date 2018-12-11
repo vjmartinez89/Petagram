@@ -35,7 +35,7 @@ public class EmailUtils {
             msg.setText(message);
             Transport.send(msg /*, "me@example.com", "my-password"*/);
             return true;
-        } catch (MessagingException mex) {
+        } catch (Exception mex) {
             Log.e("ERROR", mex.getMessage(), mex);
             return false;
         }

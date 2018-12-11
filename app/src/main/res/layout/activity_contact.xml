@@ -50,21 +50,20 @@
                     android:inputType="textMultiLine"
                     android:hint="@string/comment"/>
 
+                <android.support.design.button.MaterialButton
+                    android:id="@+id/btn_contact_send"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height"
+                    android:text="@string/send"
+                    android:textSize="@dimen/button_text_size"
+                    android:textColor="@color/white"
+                    android:layout_gravity="bottom"
+                    android:gravity="center_horizontal|center"
+                    app:cornerRadius="0dp"/>
+
             </LinearLayout>
 
-            <android.support.design.button.MaterialButton
-                android:id="@+id/btn_contact_send"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
-                android:text="@string/send"
-                android:textSize="@dimen/button_text_size"
-                android:textColor="@color/white"
-                android:layout_gravity="bottom"
-                android:gravity="center_horizontal|center"
-                app:cornerRadius="0dp"/>
-
         </LinearLayout>
+
     </LinearLayout>
-
-
 </ScrollView>

@@ -17,6 +17,7 @@ public class Contact implements Serializable {
     private String sex;
     private String address;
     private Date birthDate;
+    private int likes;
 
     public Contact (){
         //Default constructor
@@ -43,7 +44,7 @@ public class Contact implements Serializable {
      * @param address The address
      */
     public Contact(String name, String phone, String email, int photo, Date birthDate, String sex,
-                    String address){
+                    String address, int likes){
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -60,6 +61,7 @@ public class Contact implements Serializable {
             }
             setAge(age);
         }
+        this.likes = likes;
     }
 
     public String getName() {
@@ -124,6 +126,14 @@ public class Contact implements Serializable {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
     @Override

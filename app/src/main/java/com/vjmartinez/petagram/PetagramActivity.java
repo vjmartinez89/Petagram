@@ -21,6 +21,7 @@ public class PetagramActivity extends AppCompatActivity implements IPetragramAct
     protected static final int PERMISSIONS_REQUEST_CALL = 10000;
     protected static final int PICK_IMAGE = 10001;
     protected static final int REQUEST_IMAGE_CAPTURE = 10002;
+    protected static final int PERMISSIONS_REQUEST_INT = 10003;
 
 
     @Override
@@ -83,14 +84,11 @@ public class PetagramActivity extends AppCompatActivity implements IPetragramAct
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[],
                                            @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_CALL:
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showToast("Permission Granted!");
-                } else {
-                    showToast("Permission Denied!");
-                }
+        if (grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            showToast("Permission Granted!");
+        } else {
+            showToast("Permission Denied!");
         }
     }
 

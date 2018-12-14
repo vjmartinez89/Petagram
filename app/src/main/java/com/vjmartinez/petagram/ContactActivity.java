@@ -1,11 +1,16 @@
 package com.vjmartinez.petagram;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.EditText;
 
-import com.vjmartinez.petagram.utils.EmailUtils;
+import com.vjmartinez.petagram.exception.NetworkException;
+import com.vjmartinez.petagram.utils.NetworkUtils;
+import com.vjmartinez.petagram.utils.SendEmailAsyncTask;
 import com.vjmartinez.petagram.utils.StringUtils;
 
 public class ContactActivity extends PetagramActivity {
@@ -37,13 +42,35 @@ public class ContactActivity extends PetagramActivity {
         btnContactSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validateForm()) {
-                    if (EmailUtils.sendMail(edtContactMail.getText().toString(),
-                            edtContactComment.getText().toString(), "Prueba Petagram")) {
-                        showToast("El mensaje se ha enviado. Gracias.");
+
+                if (ActivityCompat.checkSelfPermission(getBaseContext(),
+                        Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(ContactActivity.this,
+                            Manifest.permission.INTERNET )) {
+
+                        showExplanation("Permission Needed", "Rationale",
+                                Manifest.permission.INTERNET, PERMISSIONS_REQUEST_INT);
+
                     } else {
-                        showToast("Se presentó un error enviando el mensaje.");
+                        requestPermission(Manifest.permission.INTERNET,
+                                PERMISSIONS_REQUEST_INT);
                     }
+                }
+
+                try {
+                    if (validateForm()) {
+
+                        if (!NetworkUtils.deviceIsConnected(getBaseContext())) {
+                            throw new NetworkException("", "El dispositivo no está conectado a internet.");
+                        }
+                        String from = edtContactMail.getText().toString();
+                        String[] to = {"vjmartinez@softcaribbean.com"};
+                        String subject = "Comentario de "+edtContactName.getText().toString();
+                        String body = edtContactComment.getText().toString();
+                        new SendEmailAsyncTask(getBaseContext(), from, to, subject, body).execute();
+                    }
+                }catch(Exception nex){
+                    showToast(nex.getMessage());
                 }
             }
         });

@@ -201,9 +201,9 @@
                 android:layout_gravity="bottom"
                 android:gravity="center_horizontal|center"
                 android:text="@string/back"
-                android:textSize="@dimen/button_text_size"
                 app:cornerRadius="0dp"
-                android:textColor="@color/white"/>
+                android:textAppearance="@style/button_text_appearance"
+                />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

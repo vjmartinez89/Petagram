@@ -31,6 +31,7 @@ public class ContactDetailAdapter
 
     private List<Contact> contacts;
     private PetagramActivity activity;
+    private ContactDetailViewHolder contactDetailViewHolder;
 
     /**
      * Default constructor
@@ -55,6 +56,7 @@ public class ContactDetailAdapter
     public void onBindViewHolder(@NonNull ContactDetailViewHolder contactDetailViewHolder,
                                  int position) {
         final Contact contact = contacts.get(position);
+        this.contactDetailViewHolder = contactDetailViewHolder;
         contactDetailViewHolder.imgContactProfile.setImageResource(contact.getPhoto());
         contactDetailViewHolder.tviCardviewContactName.setText(contact.getName());
         contactDetailViewHolder.tviCardviewContactPhone.setText(contact.getPhone());

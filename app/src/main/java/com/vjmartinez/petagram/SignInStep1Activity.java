@@ -173,7 +173,8 @@ public class SignInStep1Activity extends PetagramActivity {
                             .parse(txiBirthDate.getText().toString()),
                     rbMan.isChecked() ? "M" : "F",
                     txiContactAddress.getText().toString(),
-                    0);
+                    0,
+                    null);
         }catch(Exception e){
             Log.e("Error", e.getMessage(), e);
         }

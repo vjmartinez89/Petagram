@@ -11,17 +11,20 @@ import android.view.View;
 import com.vjmartinez.petagram.adapter.PageAdapter;
 import com.vjmartinez.petagram.fragments.ProfileFragment;
 import com.vjmartinez.petagram.fragments.RecyclerViewFragment;
+import com.vjmartinez.petagram.utils.MessageUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ContactListActivity extends PetagramActivity {
 
     //Global variables
-  //  private Toolbar actionBar = null;
     private Toolbar toolBar = null;
     private TabLayout tabLayout = null;
     private ViewPager viewPager = null;
+
+    ViewPager.OnPageChangeListener pageChangeListener = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,6 @@ public class ContactListActivity extends PetagramActivity {
     @Override
     public void initComponents() {
         super.initComponents();
-     //   actionBar =  findViewById(R.id.mainAcionBar);
         toolBar =  findViewById(R.id.toolBar);
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -91,15 +93,18 @@ public class ContactListActivity extends PetagramActivity {
      * Configure
      */
     private void setUpViewPager(){
-        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(),getFragmentsList()));
+        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(),getFragmentsList(), getTitleList()));
         tabLayout.setupWithViewPager(viewPager);
         if( tabLayout.getTabAt(0) != null ) {
-            tabLayout.getTabAt(0).setIcon(R.drawable.ic_action_name);
+            tabLayout.getTabAt(0).setIcon(R.drawable.ic_users_list);
         }
         if( tabLayout.getTabAt(1)!= null ) {
-            tabLayout.getTabAt(1).setIcon(R.drawable.ic_phone_24dp);
+            tabLayout.getTabAt(1).setIcon(R.drawable.ic_action_name);
         }
     }
+
+
+
 
     /**
      * Create and return the list of fragments to show
@@ -110,8 +115,19 @@ public class ContactListActivity extends PetagramActivity {
         RecyclerViewFragment recyclerViewFragment = new RecyclerViewFragment();
         recyclerViewFragment.setPetagramActivity(this);
         fragments.add(recyclerViewFragment);
-        fragments.add(new ProfileFragment());
+        ProfileFragment profile = new ProfileFragment();
+        profile.setPetagramActivity(this);
+        profile.setContact(recyclerViewFragment.getSelected());
+        fragments.add(profile);
         return fragments;
+    }
+
+    /**
+     * Get the list of tabs titles
+     * @return
+     */
+    private List<String> getTitleList() {
+        return Arrays.asList(getResources().getStringArray(R.array.user_tabs));
     }
 
 }

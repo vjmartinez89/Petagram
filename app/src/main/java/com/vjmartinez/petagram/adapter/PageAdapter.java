@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PageAdapter extends FragmentPagerAdapter {
 
@@ -13,11 +14,13 @@ public class PageAdapter extends FragmentPagerAdapter {
      * List of fragments to paginate
      */
     private List<Fragment> fragments;
+    private List<String> titleList;
 
 
-    public PageAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public PageAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titleList) {
         super(fm);
         this.fragments = fragments;
+        this.titleList = titleList;
     }
 
     @Override
@@ -33,14 +36,10 @@ public class PageAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position)
-        {
-            case 0:
-                return "Usuarios";
-            case 1:
-                return "Llamadas";
-
+        if(titleList != null && !titleList.isEmpty() && titleList.size() >= position){
+            return titleList.get(position);
+        }else {
+            return "No title";
         }
-        return super.getPageTitle(position);
     }
 }

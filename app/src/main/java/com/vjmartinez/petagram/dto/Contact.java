@@ -3,6 +3,7 @@ package com.vjmartinez.petagram.dto;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Victor Martinez
@@ -18,6 +19,7 @@ public class Contact implements Serializable {
     private String address;
     private Date birthDate;
     private int likes;
+    private List<ContactPhoto> photos;
 
     public Contact (){
         //Default constructor
@@ -44,7 +46,7 @@ public class Contact implements Serializable {
      * @param address The address
      */
     public Contact(String name, String phone, String email, int photo, Date birthDate, String sex,
-                    String address, int likes){
+                    String address, int likes, List<ContactPhoto> photos){
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -62,6 +64,7 @@ public class Contact implements Serializable {
             setAge(age);
         }
         this.likes = likes;
+        this.photos = photos;
     }
 
     public String getName() {
@@ -134,6 +137,14 @@ public class Contact implements Serializable {
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public List<ContactPhoto> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<ContactPhoto> photos) {
+        this.photos = photos;
     }
 
     @Override

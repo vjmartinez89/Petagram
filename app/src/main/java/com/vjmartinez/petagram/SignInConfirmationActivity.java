@@ -138,7 +138,8 @@ public class SignInConfirmationActivity extends PetagramActivity {
                     getResources().getString(R.string.man).equalsIgnoreCase(tviContactSex.getText()
                             .toString()) ? "M" : "F",
                     tviContactAddress.getText().toString(),
-                    0
+                    0,
+                    null
             );
         }catch(Exception e){
             Log.e("Error", e.getMessage(), e);

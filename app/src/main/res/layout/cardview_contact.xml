@@ -107,13 +107,30 @@
                         android:text="5"
                         android:textFontWeight="bold"
                         android:layout_gravity="center"
-                        android:textColor="@color/white"
-                        android:layout_marginRight="@dimen/basic_margin"/>
+                        android:textColor="@color/white"/>
                     <ImageView
                         android:id="@+id/ImageLikeCounts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_like_hl"
+                        android:background="@android:color/transparent"
+                        android:layout_margin="@dimen/basic_margin"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:id="@+id/tvi_card_view_contact_loves"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="false"
+                        android:text="5"
+                        android:textFontWeight="bold"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"/>
+                    <ImageView
+                        android:id="@+id/ImageLoveCounts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_star"
                         android:background="@android:color/transparent"
                         android:layout_margin="@dimen/basic_margin"
                         android:layout_gravity="center"

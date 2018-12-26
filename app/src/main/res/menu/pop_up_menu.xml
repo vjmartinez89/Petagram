@@ -3,9 +3,11 @@
 
     <item android:id="@+id/mi_like"
         android:title="@string/mi_like"
+        android:icon="@drawable/ic_like"
         android:orderInCategory="1"></item>
 
     <item android:id="@+id/mi_love"
         android:title="@string/mi_love"
+        android:icon="@drawable/ic_star"
         android:orderInCategory="2"></item>
 </menu>

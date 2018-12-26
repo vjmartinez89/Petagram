@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/layout_padding"
+    tools:context=".FormFileActivity"
+    android:background="@color/white">
+
+    <include android:id="@+id/mainAcionBar"
+        layout="@layout/action_bar">
+    </include>
+
+
+    <EditText
+        android:id="@+id/edt_ff_nombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/filename"
+        android:layout_marginTop="@dimen/layout_padding"/>
+
+    <EditText
+        android:id="@+id/edt_ff_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/filecontent"/>
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/btn_ff_save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textAppearance="@style/button_text_appearance"
+        app:cornerRadius="0dp"
+        android:gravity="center"/>
+
+
+
+</LinearLayout>

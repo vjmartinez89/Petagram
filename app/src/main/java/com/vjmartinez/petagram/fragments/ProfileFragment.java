@@ -45,10 +45,6 @@ public class ProfileFragment extends Fragment {
         this.petagramActivity = petagramActivity;
     }
 
-    public Contact getContact() {
-        return contact;
-    }
-
     public void setContact(Contact contact) {
         this.contact = contact;
     }
@@ -108,12 +104,12 @@ public class ProfileFragment extends Fragment {
      */
     private List<ContactPhoto> getPhotoList() {
         List<ContactPhoto> list = new ArrayList<>();
-        list.add(new ContactPhoto(5,R.drawable.ic_user_male));
-        list.add(new ContactPhoto(3,R.drawable.ic_user_female));
-        list.add(new ContactPhoto(7,R.drawable.ic_user_male));
-        list.add(new ContactPhoto(2,R.drawable.ic_user_female));
-        list.add(new ContactPhoto(1,R.drawable.ic_user_male));
-        list.add(new ContactPhoto(0,R.drawable.ic_user_female));
+        list.add(new ContactPhoto(5,1,R.drawable.ic_user_male));
+        list.add(new ContactPhoto(3,2,R.drawable.ic_user_female));
+        list.add(new ContactPhoto(7,10,R.drawable.ic_user_male));
+        list.add(new ContactPhoto(2,6,R.drawable.ic_user_female));
+        list.add(new ContactPhoto(1,0,R.drawable.ic_user_male));
+        list.add(new ContactPhoto(0,2,R.drawable.ic_user_female));
         return list;
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
  * @author Victor Martinez
  */
 public class Contact implements Serializable {
-
+    private int id;
     private String name;
     private String phone;
     private String email;
@@ -19,6 +19,7 @@ public class Contact implements Serializable {
     private String address;
     private Date birthDate;
     private int likes;
+    private int loves;
     private List<ContactPhoto> photos;
 
     public Contact (){
@@ -46,7 +47,7 @@ public class Contact implements Serializable {
      * @param address The address
      */
     public Contact(String name, String phone, String email, int photo, Date birthDate, String sex,
-                    String address, int likes, List<ContactPhoto> photos){
+                    String address, int likes, int loves, List<ContactPhoto> photos){
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -64,6 +65,7 @@ public class Contact implements Serializable {
             setAge(age);
         }
         this.likes = likes;
+        this.loves = loves;
         this.photos = photos;
     }
 
@@ -145,6 +147,22 @@ public class Contact implements Serializable {
 
     public void setPhotos(List<ContactPhoto> photos) {
         this.photos = photos;
+    }
+
+    public int getLoves() {
+        return loves;
+    }
+
+    public void setLoves(int loves) {
+        this.loves = loves;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

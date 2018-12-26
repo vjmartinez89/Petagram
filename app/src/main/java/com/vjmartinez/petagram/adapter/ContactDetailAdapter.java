@@ -31,7 +31,6 @@ public class ContactDetailAdapter
 
     private List<Contact> contacts;
     private PetagramActivity activity;
-    private ContactDetailViewHolder contactDetailViewHolder;
 
     /**
      * Default constructor
@@ -56,12 +55,12 @@ public class ContactDetailAdapter
     public void onBindViewHolder(@NonNull ContactDetailViewHolder contactDetailViewHolder,
                                  int position) {
         final Contact contact = contacts.get(position);
-        this.contactDetailViewHolder = contactDetailViewHolder;
         contactDetailViewHolder.imgContactProfile.setImageResource(contact.getPhoto());
         contactDetailViewHolder.tviCardviewContactName.setText(contact.getName());
         contactDetailViewHolder.tviCardviewContactPhone.setText(contact.getPhone());
         contactDetailViewHolder.tviCardviewContactEmail.setText(contact.getEmail());
         contactDetailViewHolder.tviLikes.setText(String.valueOf(contact.getLikes()));
+        contactDetailViewHolder.tviLoves.setText(String.valueOf(contact.getLoves()));
         //Onclick event on user profile image
         contactDetailViewHolder.imgContactProfile.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -121,6 +120,7 @@ public class ContactDetailAdapter
         private TextView tviCardviewContactEmail;
         private ImageButton btnLike;
         private TextView tviLikes;
+        private TextView tviLoves;
 
         ContactDetailViewHolder(View itemView){
             super(itemView);
@@ -135,6 +135,7 @@ public class ContactDetailAdapter
             btnLike = itemView.findViewById(R.id.btnLike);
 
             tviLikes = itemView.findViewById(R.id.tvi_card_view_contact_likes);
+            tviLoves =  itemView.findViewById(R.id.tvi_card_view_contact_loves);
         }
     }
 

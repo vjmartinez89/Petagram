@@ -40,6 +40,7 @@ public class SignInStep1Activity extends PetagramActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_step1);
+        this.setTitle(R.string.sis1_tittle);
         init();
         Bundle extras = getIntent().getExtras();
         if (extras != null && !extras.isEmpty()) {
@@ -173,6 +174,7 @@ public class SignInStep1Activity extends PetagramActivity {
                             .parse(txiBirthDate.getText().toString()),
                     rbMan.isChecked() ? "M" : "F",
                     txiContactAddress.getText().toString(),
+                    0,
                     0,
                     null);
         }catch(Exception e){

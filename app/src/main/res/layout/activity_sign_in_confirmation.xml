@@ -23,14 +23,6 @@
             android:padding="@dimen/layout_padding"
             >
 
-            <TextView
-                android:id="@+id/tvi_sign_in_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/tvi_sign_in_title"
-                android:textSize="@dimen/title_size"
-                android:textStyle="bold" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/background_ticket_height">
@@ -196,14 +188,28 @@
 
             <android.support.design.button.MaterialButton
                 android:id="@+id/btn_sing_in_back"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/button_height"
                 android:layout_gravity="bottom"
-                android:gravity="center_horizontal|center"
+                android:gravity="center"
                 android:text="@string/back"
+                app:cornerRadius="0dp"
+                android:layout_weight="1"
+                android:textAppearance="@style/button_text_appearance"
+                />
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/btn_sing_in_save"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:text="@string/confirm"
+                android:layout_weight="1"
                 app:cornerRadius="0dp"
                 android:textAppearance="@style/button_text_appearance"
                 />
+
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

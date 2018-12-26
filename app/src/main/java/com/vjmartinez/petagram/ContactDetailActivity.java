@@ -43,6 +43,7 @@ public class ContactDetailActivity extends PetagramActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
+        this.setTitle(R.string.cda_title);
         init();
 
         Bundle extras = getIntent().getExtras();
@@ -123,11 +124,13 @@ public class ContactDetailActivity extends PetagramActivity {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.CALL_PHONE )) {
 
-                showExplanation("Permission Needed", "Rationale",
+                showExplanation(ContactDetailActivity.this,
+                        "Permission Needed", "Rationale",
                         Manifest.permission.CALL_PHONE, PERMISSIONS_REQUEST_CALL);
 
             } else {
-                requestPermission(Manifest.permission.CALL_PHONE,
+                requestPermission(ContactDetailActivity.this,
+                        new String[]{Manifest.permission.CALL_PHONE},
                         PERMISSIONS_REQUEST_CALL);
             }
         }

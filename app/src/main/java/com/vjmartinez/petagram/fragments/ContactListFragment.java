@@ -16,17 +16,20 @@ import com.vjmartinez.petagram.R;
 import com.vjmartinez.petagram.adapter.ContactDetailAdapter;
 import com.vjmartinez.petagram.dto.Contact;
 import com.vjmartinez.petagram.dto.ContactPhoto;
+import com.vjmartinez.petagram.presenter.ContactListFragmentPresenter;
+import com.vjmartinez.petagram.presenter.IContactListFragmentPresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class RecyclerViewFragment extends Fragment {
+public class ContactListFragment extends Fragment implements IContactListFragmentView {
 
     RecyclerView contacList;
     SwipeRefreshLayout swipeRefreshLayout;
     PetagramActivity petagramActivity;
+    private IContactListFragmentPresenter presenter;
 
     public PetagramActivity getPetagramActivity() {
         return petagramActivity;
@@ -43,20 +46,14 @@ public class RecyclerViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         contacList = view.findViewById(R.id.rvContactList);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshMain);
-        initAdapters(view);
+        //Initialize the presenter to show data
+        try {
+            presenter = new ContactListFragmentPresenter(this, getContext());
+        }catch(Exception ex){
+            petagramActivity.showToast(getString(R.string.error_list_contact));
+        }
         initEvents();
         return view;
-    }
-
-
-    public void initAdapters(View v) {
-        /*We can use GridLayoutManager to see list in grid view
-             GridLayoutManager gridLayoutManager =  new GridLayoutManager( this, 2);
-        */
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(v.getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        contacList.setLayoutManager(linearLayoutManager);
-        contacList.setAdapter(new ContactDetailAdapter(getContactList(), getPetagramActivity()));
     }
 
     public void initEvents() {
@@ -67,13 +64,17 @@ public class RecyclerViewFragment extends Fragment {
             }});
     }
 
-
     /**
      * Refresh contact list
      */
     private void refreshContent(){
-           contacList.setAdapter(new ContactDetailAdapter( getContactList(), getPetagramActivity()));
-           swipeRefreshLayout.setRefreshing(false);
+        try {
+            presenter.getContactList();
+        }catch(Exception ex){
+            petagramActivity.showToast(getString(R.string.error_list_contact));
+        }finally {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     /**
@@ -97,17 +98,17 @@ public class RecyclerViewFragment extends Fragment {
             contacts.add(new Contact("Victor Julio Martinez Barrios",
                     "314 531 6197", "vijumaba89@gmail.com", R.drawable.ic_user_male,
                     dateFormat.parse("11/08/1989"),
-                    "M", "Car. 59 # 70 - 349", 5, getPhotoList()));
+                    "M", "Car. 59 # 70 - 349", 5, 3, getPhotoList()));
 
             contacts.add(new Contact("Ana Milena Mejia Diaz",
                     "314 571 3323", "amdiaz220285@gmail.com", R.drawable.ic_user_female,
                     dateFormat.parse("22/02/1985"),
-                    "F", "Car. 59 # 70 - 349", 2, getPhotoList()));
+                    "F", "Car. 59 # 70 - 349", 2, 0, getPhotoList()));
 
             contacts.add(new Contact("Nicole Martínez Mejía",
                     "314 531 2131", "nicole102014@gmail.com", R.drawable.ic_user_female,
                     dateFormat.parse("01/10/2014"),
-                    "F", "Car. 59 # 70 - 349", 10, getPhotoList()));
+                    "F", "Car. 59 # 70 - 349", 10, 3, getPhotoList()));
 
 
         }catch(Exception ex){
@@ -123,12 +124,29 @@ public class RecyclerViewFragment extends Fragment {
      */
     private List<ContactPhoto> getPhotoList() {
         List<ContactPhoto> list = new ArrayList<>();
-        list.add(new ContactPhoto(5,R.drawable.ic_user_male));
-        list.add(new ContactPhoto(3,R.drawable.ic_user_female));
-        list.add(new ContactPhoto(7,R.drawable.ic_user_male));
-        list.add(new ContactPhoto(2,R.drawable.ic_user_female));
-        list.add(new ContactPhoto(1,R.drawable.ic_user_male));
-        list.add(new ContactPhoto(0,R.drawable.ic_user_female));
+        list.add(new ContactPhoto(5,3,R.drawable.ic_user_male));
+        list.add(new ContactPhoto(3,6,R.drawable.ic_user_female));
+        list.add(new ContactPhoto(7,1,R.drawable.ic_user_male));
+        list.add(new ContactPhoto(2,8,R.drawable.ic_user_female));
+        list.add(new ContactPhoto(1,3,R.drawable.ic_user_male));
+        list.add(new ContactPhoto(0,2,R.drawable.ic_user_female));
         return list;
+    }
+
+    @Override
+    public void generateVerticalLinearLayout() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        contacList.setLayoutManager(linearLayoutManager);
+    }
+
+    @Override
+    public ContactDetailAdapter createContactDetailAdapter(List<Contact> contacts) {
+        return new ContactDetailAdapter(contacts, getPetagramActivity());
+    }
+
+    @Override
+    public void initAdapter(ContactDetailAdapter contactDetailAdapter) {
+        contacList.setAdapter(contactDetailAdapter);
     }
 }

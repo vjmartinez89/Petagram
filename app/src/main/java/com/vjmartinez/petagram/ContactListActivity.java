@@ -10,8 +10,7 @@ import android.view.View;
 
 import com.vjmartinez.petagram.adapter.PageAdapter;
 import com.vjmartinez.petagram.fragments.ProfileFragment;
-import com.vjmartinez.petagram.fragments.RecyclerViewFragment;
-import com.vjmartinez.petagram.utils.MessageUtil;
+import com.vjmartinez.petagram.fragments.ContactListFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,12 +23,12 @@ public class ContactListActivity extends PetagramActivity {
     private TabLayout tabLayout = null;
     private ViewPager viewPager = null;
 
-    ViewPager.OnPageChangeListener pageChangeListener = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_list);
+        this.setTitle(R.string.cla_tittle);
         init();
     }
 
@@ -112,7 +111,7 @@ public class ContactListActivity extends PetagramActivity {
      */
     private List<Fragment> getFragmentsList(){
         List<Fragment> fragments = new ArrayList<>();
-        RecyclerViewFragment recyclerViewFragment = new RecyclerViewFragment();
+        ContactListFragment recyclerViewFragment = new ContactListFragment();
         recyclerViewFragment.setPetagramActivity(this);
         fragments.add(recyclerViewFragment);
         ProfileFragment profile = new ProfileFragment();

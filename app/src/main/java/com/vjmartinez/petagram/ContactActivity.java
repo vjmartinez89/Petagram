@@ -48,11 +48,13 @@ public class ContactActivity extends PetagramActivity {
                     if (ActivityCompat.shouldShowRequestPermissionRationale(ContactActivity.this,
                             Manifest.permission.INTERNET )) {
 
-                        showExplanation("Permission Needed", "Rationale",
+                        showExplanation(ContactActivity.this,"Permission Needed",
+                                "Rationale",
                                 Manifest.permission.INTERNET, PERMISSIONS_REQUEST_INT);
 
                     } else {
-                        requestPermission(Manifest.permission.INTERNET,
+                        requestPermission(ContactActivity.this,
+                                new String[] {Manifest.permission.INTERNET},
                                 PERMISSIONS_REQUEST_INT);
                     }
                 }

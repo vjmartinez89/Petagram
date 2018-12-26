@@ -5,12 +5,14 @@ import java.io.Serializable;
 public class ContactPhoto implements Serializable {
 
     private int likes;
+    private int loves;
     private int resourceId;
 
     public ContactPhoto(){}
 
-    public ContactPhoto(int likes, int resourceId){
+    public ContactPhoto(int likes, int loves, int resourceId){
         this.likes = likes;
+        this.loves = loves;
         this.resourceId = resourceId;
     }
 
@@ -28,5 +30,13 @@ public class ContactPhoto implements Serializable {
 
     public void setResourceId(int resourceId) {
         this.resourceId = resourceId;
+    }
+
+    public int getLoves() {
+        return loves;
+    }
+
+    public void setLoves(int loves) {
+        this.loves = loves;
     }
 }

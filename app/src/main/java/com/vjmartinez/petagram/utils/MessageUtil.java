@@ -65,7 +65,8 @@ public class MessageUtil {
      * @param message The alert message
      */
     public  static void showAlertDialog(Context context, String title, String message) {
-        showAlertDialog(context, title, message, true, false, null, null);
+        showAlertDialog(context, title, message, true, false,
+                null, null);
     }
 
     /**
@@ -79,8 +80,11 @@ public class MessageUtil {
      * @param yesButtonText Yes button text (Mandatory when isConfirmation = true)
      * @param noButtonText No button text (Mandatory when isConfirmation = true)
      */
-    public  static void showAlertDialog(Context context, String title, String message, @Nullable  boolean cancelable,
-                                        @Nullable  boolean isConfirmation,  @Nullable String yesButtonText,  @Nullable String noButtonText){
+    public  static void showAlertDialog(Context context, String title, String message,
+                                        @Nullable  boolean cancelable,
+                                        @Nullable  boolean isConfirmation,
+                                        @Nullable String yesButtonText,
+                                        @Nullable String noButtonText){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(title);
         builder.setMessage(message)
@@ -93,7 +97,8 @@ public class MessageUtil {
                 }
             });
         }
-        if(isConfirmation && !StringUtils.isEmpty(yesButtonText) && !StringUtils.isEmpty(noButtonText)) {
+        if(isConfirmation && !StringUtils.isEmpty(yesButtonText) && !StringUtils
+                .isEmpty(noButtonText)) {
             builder.setPositiveButton(yesButtonText, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

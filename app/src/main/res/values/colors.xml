@@ -10,4 +10,5 @@
     <color name="textColor">#7D869A</color>
     <color name="titleColor">#000000</color>
     <color name="subtitleColor">#DCE4DF</color>
+    <color name="hlColor">#f1f108</color>
 </resources>

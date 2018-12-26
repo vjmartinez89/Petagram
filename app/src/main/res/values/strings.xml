@@ -64,6 +64,37 @@
     <string name="mi_contact">Contactar</string>
     <string name="comment">Comentario</string>
     <string name="send">Enviar</string>
+    <string name="mi_turn_bluetooth">Bluetooth</string>
+    <string name="no_bluetooth">El dispositivo no cuenta con Bluetooth</string>
+    <string name="blt_disable">Se ha desactivado el Bluetooth</string>
+    <string name="blt_enable">Se ha activado el Bluetooth</string>
+    <string name="file_form_title">Escritura de archivos</string>
+    <string name="save">Guardar</string>
+    <string name="filename">Nombre del archivo</string>
+    <string name="filecontent">Contenido</string>
+    <string name="files">Archivos</string>
+    <string name="file_name_empty">Ingrese el nombre del archivo</string>
+    <string name="file_name_invalid">La extensión soportada es .txt</string>
+    <string name="file_content_empty">Ingrese el contenido del archivo</string>
+    <string name="file_created">Se ha creado el archivo</string>
+    <string name="file_creation_error">Error creando el archivo</string>
+    <string name="ffa_tittle">Archivos</string>
+    <string name="sis1_tittle">Registrarse</string>
+    <string name="sisc_tittle">Confirmación</string>
+    <string name="cla_tittle">Usuarios</string>
+    <string name="cda_title">Datos del usuario</string>
+    <string name="mi_io_file">Almacenamiento interno</string>
+    <string name="mi_shared_pref">Preferencia compartida</string>
+    <string name="mi_external_storage">Almacenamiento externo</string>
+    <string name="mi_see_preferences">Ver preferencias</string>
+    <string name="preference_add">Preferencia agregada</string>
+    <string name="preference_add_error">Error agregando preferencia</string>
+    <string name="preferences">Preferencias</string>
+    <string name="no_preferences_found">No hay preferencias que mostrar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="error_create_contact">Error creando el contacto</string>
+    <string name="create_contact_succes">Registro exitoso</string>
+    <string name="error_list_contact">Error cargando la lista de contactos</string>
 
     <string-array name="user_tabs">
         <item>Usuarios</item>

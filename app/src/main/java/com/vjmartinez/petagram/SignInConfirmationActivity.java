@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.vjmartinez.petagram.db.ContactBuilder;
 import com.vjmartinez.petagram.dto.Contact;
 import com.vjmartinez.petagram.utils.StringUtils;
 
@@ -23,13 +24,16 @@ public class SignInConfirmationActivity extends PetagramActivity {
     private TextView tviContactAddress;
     private TextView tviContactSex;
     private MaterialButton btnSingInBack;
+    private MaterialButton btnSingInSave;
     private Toolbar actionBar = null;
+    private ContactBuilder contactBuilder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_confirmation);
-
+        this.setTitle(R.string.sisc_tittle);
         init();
 
         Bundle extras = getIntent().getExtras();
@@ -43,7 +47,6 @@ public class SignInConfirmationActivity extends PetagramActivity {
                 }
             }
         }
-
     }
 
     /***
@@ -59,13 +62,7 @@ public class SignInConfirmationActivity extends PetagramActivity {
         tviContactEmail = findViewById(R.id.tvi_contact_email);
         tviContactAddress = findViewById(R.id.tvi_contact_address);
         btnSingInBack = findViewById(R.id.btn_sing_in_back);
-
-        btnSingInBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
+        btnSingInSave = findViewById(R.id.btn_sing_in_save);
 
         actionBar = findViewById(R.id.mainAcionBar);
         setSupportActionBar(actionBar);
@@ -87,7 +84,20 @@ public class SignInConfirmationActivity extends PetagramActivity {
         actionBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goBack();
+                goBack(false);
+            }
+        });
+
+        btnSingInBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack(false);
+            }
+        });
+        btnSingInSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveContact();
             }
         });
     }
@@ -101,7 +111,7 @@ public class SignInConfirmationActivity extends PetagramActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK){
-           goBack();
+           goBack(false);
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -109,14 +119,16 @@ public class SignInConfirmationActivity extends PetagramActivity {
     /**
      * Go to previous activity
      */
-    private void goBack(){
+    private void goBack(boolean setEmptyParam){
         Contact contact = getFormData();
         Bundle extras = new Bundle();
-        try {
-            extras.putSerializable("CONTACT_OBJECT", contact);
-        }catch(Exception jse){
-            extras.putString("CONTACT_OBJECT", "" );
-            Log.e("Error", jse.getMessage(), jse);
+        if(!setEmptyParam) {
+            try {
+                extras.putSerializable("CONTACT_OBJECT", contact);
+            } catch (Exception jse) {
+                extras.putString("CONTACT_OBJECT", "");
+                Log.e("Error", jse.getMessage(), jse);
+            }
         }
         go(SignInStep1Activity.class, extras,true);
     }
@@ -138,6 +150,7 @@ public class SignInConfirmationActivity extends PetagramActivity {
                     getResources().getString(R.string.man).equalsIgnoreCase(tviContactSex.getText()
                             .toString()) ? "M" : "F",
                     tviContactAddress.getText().toString(),
+                    0,
                     0,
                     null
             );
@@ -164,6 +177,22 @@ public class SignInConfirmationActivity extends PetagramActivity {
             tviContactPhone.setText(contact.getPhone());
             tviContactEmail.setText(contact.getEmail());
             tviContactAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
+        }
+    }
+
+    /**
+     * Save a contact
+     */
+    private void saveContact(){
+        try {
+            Contact contact = getFormData();
+            //TODO: Migrate to MVP
+            contactBuilder = new ContactBuilder(getBaseContext());
+            contactBuilder.insertContact(contact);
+            showToast(getString(R.string.create_contact_succes));
+            goBack(true);
+        }catch(Exception e){
+            showToast(getString(R.string.error_create_contact));
         }
     }
 

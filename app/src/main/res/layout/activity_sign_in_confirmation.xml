@@ -186,19 +186,19 @@
             android:gravity="center|bottom"
             android:orientation="horizontal">
 
-            <android.support.design.button.MaterialButton
+            <Button
                 android:id="@+id/btn_sing_in_back"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_height"
                 android:layout_gravity="bottom"
                 android:gravity="center"
                 android:text="@string/back"
-                app:cornerRadius="0dp"
                 android:layout_weight="1"
-                android:textAppearance="@style/button_text_appearance"
+                android:background="@color/white"
+                android:textAppearance="@style/button_secondary"
                 />
 
-            <android.support.design.button.MaterialButton
+            <Button
                 android:id="@+id/btn_sing_in_save"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_height"
@@ -206,8 +206,8 @@
                 android:gravity="center"
                 android:text="@string/confirm"
                 android:layout_weight="1"
-                app:cornerRadius="0dp"
-                android:textAppearance="@style/button_text_appearance"
+                android:background="@color/colorAccent"
+                android:textAppearance="@style/button_primary"
                 />
 
         </LinearLayout>

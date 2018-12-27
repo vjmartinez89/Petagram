@@ -33,7 +33,7 @@
         android:layout_height="@dimen/button_height"
         android:text="@string/save"
         android:textAllCaps="false"
-        android:textAppearance="@style/button_text_appearance"
+        android:textAppearance="@style/button_primary"
         app:cornerRadius="0dp"
         android:gravity="center"/>
 

@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
                     android:text="@string/send"
-                    android:textAppearance="@style/button_text_appearance"
+                    android:textAppearance="@style/button_primary"
                     android:layout_gravity="bottom"
                     android:gravity="center_horizontal|center"
                     app:cornerRadius="0dp"/>

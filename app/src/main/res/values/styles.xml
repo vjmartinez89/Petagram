@@ -22,10 +22,17 @@
         <item name="android:src">@drawable/ic_more_vert_24dp</item>
     </style>
 
-    <style name="button_text_appearance">
+    <style name="button_primary">
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="button_secondary">
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@color/white</item>
     </style>
 
 </resources>

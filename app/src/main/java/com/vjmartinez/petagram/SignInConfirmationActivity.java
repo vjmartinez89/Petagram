@@ -1,19 +1,18 @@
 package com.vjmartinez.petagram;
 
-import android.support.design.button.MaterialButton;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.vjmartinez.petagram.db.ContactBuilder;
 import com.vjmartinez.petagram.dto.Contact;
+import com.vjmartinez.petagram.utils.DateUtils;
 import com.vjmartinez.petagram.utils.StringUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class SignInConfirmationActivity extends PetagramActivity {
 
@@ -23,10 +22,15 @@ public class SignInConfirmationActivity extends PetagramActivity {
     private TextView tviContactEmail;
     private TextView tviContactAddress;
     private TextView tviContactSex;
-    private MaterialButton btnSingInBack;
-    private MaterialButton btnSingInSave;
+    private Button btnSingInBack;
+    private Button btnSingInSave;
     private Toolbar actionBar = null;
     private ContactBuilder contactBuilder;
+
+    /**
+     * The constant FORMAT_DATE
+     */
+    private static final String FORMAT_DATE = "dd/MM/yyyy";
 
 
     @Override
@@ -139,21 +143,18 @@ public class SignInConfirmationActivity extends PetagramActivity {
      */
     private Contact getFormData() {
         try {
-            return new Contact(
-                    tviContactName.getText().toString(),
-                    tviContactPhone.getText().toString(),
-                    tviContactEmail.getText().toString(),
-                    R.drawable.ic_user_male,
-                    (new SimpleDateFormat("dd/MM/yyyy", new Locale("es_CO")))
-                            .parse(tviContactBirthday.getText()
-                            .toString()),
-                    getResources().getString(R.string.man).equalsIgnoreCase(tviContactSex.getText()
-                            .toString()) ? "M" : "F",
-                    tviContactAddress.getText().toString(),
-                    0,
-                    0,
-                    null
-            );
+            Contact contact = new Contact();
+            contact.setName(tviContactName.getText().toString());
+            contact.setSex( getResources().getString(R.string.man)
+                    .equalsIgnoreCase(tviContactSex.getText()
+                    .toString()) ? "M" : "F");
+            contact.setPhone(tviContactPhone.getText().toString());
+            contact.setEmail(tviContactEmail.getText().toString());
+            contact.setPhoto(R.drawable.ic_user_male);
+            contact.setBirthDate(DateUtils.parseDate(tviContactBirthday.getText()
+                    .toString(), FORMAT_DATE));
+            contact.setAddress(tviContactAddress.getText().toString());
+            return contact;
         }catch(Exception e){
             Log.e("Error", e.getMessage(), e);
         }
@@ -168,9 +169,8 @@ public class SignInConfirmationActivity extends PetagramActivity {
     private void setFormData(Contact contact) {
         if(contact != null) {
             tviContactName.setText(contact.getName());
-            tviContactBirthday.setText(new SimpleDateFormat("dd/MM/yyyy",
-                    new Locale("es_CO"))
-                    .format(contact.getBirthDate()));
+            tviContactBirthday.setText(DateUtils.formatDate(contact.getBirthDate(),
+                    FORMAT_DATE));
             tviContactSex.setText("M".equalsIgnoreCase(contact.getSex()) ?
                     getResources().getString(R.string.man) :
                     getResources().getString(R.string.woman));

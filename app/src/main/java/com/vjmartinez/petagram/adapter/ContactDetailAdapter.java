@@ -1,7 +1,9 @@
 package com.vjmartinez.petagram.adapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
@@ -13,10 +15,12 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.vjmartinez.petagram.db.ContactBuilder;
 import com.vjmartinez.petagram.dto.Contact;
 import com.vjmartinez.petagram.ContactDetailActivity;
 import com.vjmartinez.petagram.PetagramActivity;
 import com.vjmartinez.petagram.R;
+import com.vjmartinez.petagram.utils.MessageUtil;
 
 import java.util.List;
 
@@ -52,8 +56,9 @@ public class ContactDetailAdapter
 
     //Fill the list contact object in position to view properties
     @Override
-    public void onBindViewHolder(@NonNull ContactDetailViewHolder contactDetailViewHolder,
+    public void onBindViewHolder(@NonNull final ContactDetailViewHolder contactDetailViewHolder,
                                  int position) {
+        final ContactBuilder contactBuilder = new ContactBuilder(activity.getBaseContext());
         final Contact contact = contacts.get(position);
         contactDetailViewHolder.imgContactProfile.setImageResource(contact.getPhoto());
         contactDetailViewHolder.tviCardviewContactName.setText(contact.getName());
@@ -82,21 +87,41 @@ public class ContactDetailAdapter
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.mi_like:
+                                contact.setLikes(contact.getLikes()+1);
+                                contactBuilder.addLike(contact);
                                 activity.showToast(activity.getResources()
                                         .getString(R.string.msg_like)+" "+contact.getName());
                                 break;
                             case R.id.mi_love:
+                                contact.setLoves(contact.getLoves()+1);
+                                contactBuilder.addLike(contact);
                                 activity.showToast(activity.getResources()
                                         .getString(R.string.msg_love)+" "+contact.getName());
                                 break;
                         }
+
+                        try {
+                            Contact c = contactBuilder.getContact(contact);
+                            contactDetailViewHolder.tviLikes.setText(String.valueOf(contact.getLikes()));
+                            contactDetailViewHolder.tviLoves.setText(String.valueOf(contact.getLoves()));
+                        }catch (Exception ex){
+                            activity.showToast(activity.getString(R.string.error_list_contact));
+                        }
                         return true;
                     }
+
                 });
 
                 popupMenu.show();
+            }
+        });
 
-
+        contactDetailViewHolder.ivCvcDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO Confirm delete
+                contactBuilder.deleteContact(contact);
+                activity.init();
             }
         });
     }
@@ -121,6 +146,7 @@ public class ContactDetailAdapter
         private ImageButton btnLike;
         private TextView tviLikes;
         private TextView tviLoves;
+        private ImageView ivCvcDelete;
 
         ContactDetailViewHolder(View itemView){
             super(itemView);
@@ -136,7 +162,7 @@ public class ContactDetailAdapter
 
             tviLikes = itemView.findViewById(R.id.tvi_card_view_contact_likes);
             tviLoves =  itemView.findViewById(R.id.tvi_card_view_contact_loves);
+            ivCvcDelete = itemView.findViewById(R.id.iv_cvc_delete);
         }
     }
-
 }

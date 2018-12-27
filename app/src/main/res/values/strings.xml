@@ -95,6 +95,7 @@
     <string name="error_create_contact">Error creando el contacto</string>
     <string name="create_contact_succes">Registro exitoso</string>
     <string name="error_list_contact">Error cargando la lista de contactos</string>
+    <string name="conf_delete_contact">¿desea eliminar el contaco?</string>
 
     <string-array name="user_tabs">
         <item>Usuarios</item>

@@ -102,6 +102,35 @@ public class ContactDAO {
         }
     }
 
+
+    /**
+     * Update likes and love quantity
+     * @param contact the contact object to update
+     */
+    public void addLike(Contact contact)
+    {
+        DataBaseHelper dataBaseHelper;
+        SQLiteDatabase db = null;
+        ContentValues contentValues;
+        try {
+            contentValues = new ContentValues();
+            contentValues.put(DatabaseConstants.TABLE_CONTACTS_LIKES, contact.getLikes());
+            contentValues.put(DatabaseConstants.TABLE_CONTACTS_LOVES, contact.getLoves());
+            dataBaseHelper = new DataBaseHelper(context);
+            db = dataBaseHelper.getWritableDatabase();
+            db.update(DatabaseConstants.TABLE_CONTACTS,  contentValues,
+                    " " + DatabaseConstants.TABLE_CONTACTS_ID + " = ?",
+                    new String[]{String.valueOf(contact.getId())});
+        }catch (SQLException ex){
+            Log.e("ERROR", "Database error "+ ex.getMessage(), ex);
+            throw ex;
+        }finally {
+            if(db != null){
+                db.close();
+            }
+        }
+    }
+
     /**
      * Build a ContentValues object from Contact
      * @param contact The Contact object
@@ -125,5 +154,88 @@ public class ContactDAO {
                 "M", true).equalsIgnoreCase("M") ? R.drawable.ic_user_male :
                          R.drawable.ic_user_female);
         return contentValues;
+    }
+
+
+    /**
+     * Obtain a contact object information
+     * @param contact The contact with id parameter
+     * @return The contact data object
+     * @throws ParseException When birth date is wrong
+     * @throws SQLException When database fail
+     */
+    public Contact getContact(Contact contact) throws ParseException, SQLException{
+        DataBaseHelper dataBaseHelper;
+        Contact res = null;
+        Cursor rs = null;
+        SQLiteDatabase db = null;
+        try {
+            dataBaseHelper = new DataBaseHelper(context);
+            db = dataBaseHelper.getWritableDatabase();
+            String sql = dataBaseHelper.getSqlProperty("select.one.contact");
+            rs = db.rawQuery(sql, new String[]{String.valueOf(contact.getId())});
+
+            /**
+             * ID, NAME, PHONE, EMAIL, PHOTO, SEX, ADDRESS, BIRTH_DATE, \
+             *                     LIKES, LOVES FROM CONTACTS
+             */
+            while (rs.moveToNext()) {
+                int index = 0;
+                res = new Contact();
+                res.setId(rs.getInt(index));
+                res.setName(rs.getString(++index));
+                res.setPhone(rs.getString(++index));
+                res.setEmail(rs.getString(++index));
+                res.setPhoto(rs.getInt(++index));
+                res.setSex(rs.getString(++index));
+                res.setAddress(rs.getString(++index));
+                String date = rs.getString(++index);
+                if (!StringUtils.isEmpty(date)) {
+                    res.setBirthDate(new SimpleDateFormat("dd/MM/yyyy",
+                            new Locale("es")).parse(date));
+                }
+                res.setLikes(rs.getInt(++index));
+                res.setLoves(rs.getInt(++index));
+            }
+        }catch(ParseException pe){
+            Log.e("ERROR", "Parsing error " + pe.getMessage(), pe);
+            throw pe;
+        }catch (SQLException ex){
+            Log.e("ERROR", "Database error "+ ex.getMessage(), ex);
+            throw ex;
+        }finally {
+            if(rs!=null && !rs.isClosed()){
+                rs.close();
+            }
+            if(db != null){
+                db.close();
+            }
+        }
+        return res;
+    }
+
+
+    /**
+     * Delete likes and love quantity
+     * @param contact the contact object to update
+     */
+    public void deleteContact(Contact contact)
+    {
+        DataBaseHelper dataBaseHelper;
+        SQLiteDatabase db = null;
+        try {
+            dataBaseHelper = new DataBaseHelper(context);
+            db = dataBaseHelper.getWritableDatabase();
+            db.delete(DatabaseConstants.TABLE_CONTACTS,
+                    " " + DatabaseConstants.TABLE_CONTACTS_ID + " = ?",
+                    new String[]{String.valueOf(contact.getId())});
+        }catch (SQLException ex){
+            Log.e("ERROR", "Database error "+ ex.getMessage(), ex);
+            throw ex;
+        }finally {
+            if(db != null){
+                db.close();
+            }
+        }
     }
 }

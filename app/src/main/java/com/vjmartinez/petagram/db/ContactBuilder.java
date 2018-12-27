@@ -36,6 +36,41 @@ public class ContactBuilder {
         contactDAO = new ContactDAO(context);
         contactDAO.insertContact(contact);
     }
+
+    /**
+     * Add likes or loves to a contact
+     * @param contact The contact object
+     */
+    public void addLike(Contact contact)  throws SQLException {
+        ContactDAO contactDAO;
+        contactDAO = new ContactDAO(context);
+        contactDAO.addLike(contact);
+    }
+
+    /**
+     * Get an unique contact data
+     * @param contact The contact object whit id parameter
+     * @return The contact
+     * @throws ParseException
+     * @throws SQLException
+     */
+    public Contact getContact(Contact contact) throws ParseException, SQLException{
+        ContactDAO contactDAO;
+        contactDAO = new ContactDAO(context);
+        return contactDAO.getContact(contact);
+    }
+
+    /**
+     * Delete a contact
+     * @param contact
+     * @throws ParseException
+     * @throws SQLException
+     */
+    public void deleteContact(Contact contact){
+        ContactDAO contactDAO;
+        contactDAO = new ContactDAO(context);
+        contactDAO.deleteContact(contact);
+    }
 }
 
 

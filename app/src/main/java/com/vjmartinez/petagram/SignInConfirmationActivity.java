@@ -1,19 +1,18 @@
 package com.vjmartinez.petagram;
 
-import android.content.Intent;
-import android.support.design.button.MaterialButton;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vjmartinez.petagram.db.ContactBuilder;
+import com.vjmartinez.petagram.dto.Contact;
+import com.vjmartinez.petagram.utils.DateUtils;
+import com.vjmartinez.petagram.utils.StringUtils;
 
-import java.text.SimpleDateFormat;
 
 public class SignInConfirmationActivity extends PetagramActivity {
 
@@ -23,30 +22,35 @@ public class SignInConfirmationActivity extends PetagramActivity {
     private TextView tviContactEmail;
     private TextView tviContactAddress;
     private TextView tviContactSex;
-    private MaterialButton btnSingInBack;
+    private Button btnSingInBack;
+    private Button btnSingInSave;
     private Toolbar actionBar = null;
+    private ContactBuilder contactBuilder;
+
+    /**
+     * The constant FORMAT_DATE
+     */
+    private static final String FORMAT_DATE = "dd/MM/yyyy";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_confirmation);
-
+        this.setTitle(R.string.sisc_tittle);
         init();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && !extras.isEmpty()) {
-            if(!StringUtils.isEmpty(extras.getString("CONTACT_OBJECT"))){
+            if(extras.getSerializable("CONTACT_OBJECT") != null){
                 try {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    Contact contact = objectMapper.readValue(extras.getString("CONTACT_OBJECT"),
-                            Contact.class);
+                    Contact contact = (Contact)extras.getSerializable("CONTACT_OBJECT");
                     setFormData(contact);
                 }catch(Exception e){
                     Log.e("Error", e.getMessage(), e);
                 }
             }
         }
-
     }
 
     /***
@@ -55,25 +59,21 @@ public class SignInConfirmationActivity extends PetagramActivity {
     @Override
     public void initComponents() {
         //TextView initialization
-        tviContactName = (TextView) findViewById(R.id.tvi_contact_name);
-        tviContactBirthday = (TextView) findViewById(R.id.tvi_contact_birthday);
-        tviContactSex = (TextView)findViewById(R.id.tvi_contact_sex);
-        tviContactPhone = (TextView) findViewById(R.id.tvi_contact_phone);
-        tviContactEmail = (TextView) findViewById(R.id.tvi_contact_email);
-        tviContactAddress = (TextView) findViewById(R.id.tvi_contact_address);
-        btnSingInBack = (MaterialButton) findViewById(R.id.btn_sing_in_back);
+        tviContactName = findViewById(R.id.tvi_contact_name);
+        tviContactBirthday = findViewById(R.id.tvi_contact_birthday);
+        tviContactSex = findViewById(R.id.tvi_contact_sex);
+        tviContactPhone = findViewById(R.id.tvi_contact_phone);
+        tviContactEmail = findViewById(R.id.tvi_contact_email);
+        tviContactAddress = findViewById(R.id.tvi_contact_address);
+        btnSingInBack = findViewById(R.id.btn_sing_in_back);
+        btnSingInSave = findViewById(R.id.btn_sing_in_save);
 
-        btnSingInBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
-
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        actionBar = findViewById(R.id.mainAcionBar);
         setSupportActionBar(actionBar);
         //Set support for previous action bar button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -88,21 +88,34 @@ public class SignInConfirmationActivity extends PetagramActivity {
         actionBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goBack();
+                goBack(false);
+            }
+        });
+
+        btnSingInBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack(false);
+            }
+        });
+        btnSingInSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveContact();
             }
         });
     }
 
     /**
      * Go to Main Activity when user touch back button
-     * @param keyCode
-     * @param event
-     * @return
+     * @param keyCode the key code
+     * @param event the event object
+     * @return boolean flag
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK){
-           goBack();
+           goBack(false);
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -110,36 +123,38 @@ public class SignInConfirmationActivity extends PetagramActivity {
     /**
      * Go to previous activity
      */
-    private void goBack(){
+    private void goBack(boolean setEmptyParam){
         Contact contact = getFormData();
-        ObjectMapper objectMapper = new ObjectMapper();
         Bundle extras = new Bundle();
-        try {
-            extras.putString("CONTACT_OBJECT", objectMapper.writeValueAsString(contact));
-        }catch(Exception jse){
-            extras.putString("CONTACT_OBJECT", "" );
-            Log.e("Error", jse.getMessage(), jse);
+        if(!setEmptyParam) {
+            try {
+                extras.putSerializable("CONTACT_OBJECT", contact);
+            } catch (Exception jse) {
+                extras.putString("CONTACT_OBJECT", "");
+                Log.e("Error", jse.getMessage(), jse);
+            }
         }
         go(SignInStep1Activity.class, extras,true);
     }
 
     /**
      * Create a Contact object from Form data
-     * @return
+     * @return A contact object with form information
      */
     private Contact getFormData() {
         try {
-            return new Contact(
-                    tviContactName.getText().toString(),
-                    tviContactPhone.getText().toString(),
-                    tviContactEmail.getText().toString(),
-                    R.drawable.ic_user_male,
-                    (new SimpleDateFormat("dd/MM/yyyy")).parse(tviContactBirthday.getText()
-                            .toString()),
-                    getResources().getString(R.string.man).equalsIgnoreCase(tviContactSex.getText()
-                            .toString()) ? "M" : "F",
-                    tviContactAddress.getText().toString()
-            );
+            Contact contact = new Contact();
+            contact.setName(tviContactName.getText().toString());
+            contact.setSex( getResources().getString(R.string.man)
+                    .equalsIgnoreCase(tviContactSex.getText()
+                    .toString()) ? "M" : "F");
+            contact.setPhone(tviContactPhone.getText().toString());
+            contact.setEmail(tviContactEmail.getText().toString());
+            contact.setPhoto(R.drawable.ic_user_male);
+            contact.setBirthDate(DateUtils.parseDate(tviContactBirthday.getText()
+                    .toString(), FORMAT_DATE));
+            contact.setAddress(tviContactAddress.getText().toString());
+            return contact;
         }catch(Exception e){
             Log.e("Error", e.getMessage(), e);
         }
@@ -149,19 +164,36 @@ public class SignInConfirmationActivity extends PetagramActivity {
 
     /**
      * Set object data to form views
-     * @param contact
+     * @param contact The contact object
      */
     private void setFormData(Contact contact) {
+        if(contact != null) {
+            tviContactName.setText(contact.getName());
+            tviContactBirthday.setText(DateUtils.formatDate(contact.getBirthDate(),
+                    FORMAT_DATE));
+            tviContactSex.setText("M".equalsIgnoreCase(contact.getSex()) ?
+                    getResources().getString(R.string.man) :
+                    getResources().getString(R.string.woman));
+            tviContactPhone.setText(contact.getPhone());
+            tviContactEmail.setText(contact.getEmail());
+            tviContactAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
+        }
+    }
 
-        tviContactName.setText(contact.getName());
-        tviContactBirthday.setText(new SimpleDateFormat("dd/MM/yyyy")
-                .format(contact.getBirthDate()));
-        tviContactSex.setText( "M".equalsIgnoreCase(contact.getSex()) ?
-                getResources().getString(R.string.man) :
-                getResources().getString(R.string.woman));
-        tviContactPhone.setText(contact.getPhone());
-        tviContactEmail.setText(contact.getEmail());
-        tviContactAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
+    /**
+     * Save a contact
+     */
+    private void saveContact(){
+        try {
+            Contact contact = getFormData();
+            //TODO: Migrate to MVP
+            contactBuilder = new ContactBuilder(getBaseContext());
+            contactBuilder.insertContact(contact);
+            showToast(getString(R.string.create_contact_succes));
+            goBack(true);
+        }catch(Exception e){
+            showToast(getString(R.string.error_create_contact));
+        }
     }
 
 }

@@ -1,6 +1,5 @@
 package com.vjmartinez.petagram;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -23,10 +22,12 @@ public class AboutActivity extends PetagramActivity {
      */
     @Override
     public void initComponents() {
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        actionBar = findViewById(R.id.mainAcionBar);
         setSupportActionBar(actionBar);
         //Set support for previous action bar button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     /**
@@ -54,9 +55,9 @@ public class AboutActivity extends PetagramActivity {
 
     /**
      * Go to Main Activity when user touch back button
-     * @param keyCode
-     * @param event
-     * @return
+     * @param keyCode The key code
+     * @param event The event object
+     * @return boolean flag
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

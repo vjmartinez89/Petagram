@@ -23,14 +23,6 @@
             android:padding="@dimen/layout_padding"
             >
 
-            <TextView
-                android:id="@+id/tvi_sign_in_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/tvi_sign_in_title"
-                android:textSize="@dimen/title_size"
-                android:textStyle="bold" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/background_ticket_height">
@@ -194,16 +186,30 @@
             android:gravity="center|bottom"
             android:orientation="horizontal">
 
-            <android.support.design.button.MaterialButton
+            <Button
                 android:id="@+id/btn_sing_in_back"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/button_height"
                 android:layout_gravity="bottom"
-                android:gravity="center_horizontal|center"
+                android:gravity="center"
                 android:text="@string/back"
-                android:textSize="@dimen/button_text_size"
-                app:cornerRadius="0dp"
-                android:textColor="@color/white"/>
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:textAppearance="@style/button_secondary"
+                />
+
+            <Button
+                android:id="@+id/btn_sing_in_save"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:text="@string/confirm"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:textAppearance="@style/button_primary"
+                />
+
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.ProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/layout_padding">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/civ_prf_photo"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:src="@drawable/ic_user_male"
+            app:civ_border_color="@color/colorAccent"
+            app:civ_border_width="4dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
+            app:civ_shadow_color="@color/backgroundColor"
+            />
+        <TextView
+            android:id="@+id/tvi_prf_contact_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            android:layout_above="@+id/civ_prf_photo"
+            android:gravity="center"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="?android:attr/listDivider"
+            android:paddingTop="@dimen/basic_margin"
+            android:paddingBottom="@dimen/basic_margin"/>
+
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/basic_margin">
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/sr_prf_photo_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_prf_photo_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/basic_margin">
+                </android.support.v7.widget.RecyclerView>
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</FrameLayout>

@@ -131,10 +131,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
                     android:text="@string/next"
-                    android:textSize="@dimen/button_text_size"
-                    android:textColor="@color/white"
                     android:layout_gravity="bottom"
                     android:gravity="center_horizontal|center"
+                    android:textAppearance="@style/button_primary"
                     app:cornerRadius="0dp"/>
             </LinearLayout>
 

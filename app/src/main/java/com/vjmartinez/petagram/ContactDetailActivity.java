@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -20,9 +18,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vjmartinez.petagram.dto.Contact;
+import com.vjmartinez.petagram.utils.MessageUtil;
+import com.vjmartinez.petagram.utils.StringUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class ContactDetailActivity extends PetagramActivity {
 
@@ -38,26 +39,19 @@ public class ContactDetailActivity extends PetagramActivity {
     private LinearLayout rowPhone;
     private LinearLayout rowEmail;
 
-    private Uri imageUri;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
+        this.setTitle(R.string.cda_title);
         init();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && !extras.isEmpty()) {
 
-            if(!StringUtils.isEmpty(extras.getString("CONTACT_OBJECT"))){
-                try {
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    Contact contact = objectMapper.readValue(extras.getString("CONTACT_OBJECT"),
-                            Contact.class);
-                    setFormData(contact);
-                }catch(Exception e){
-                    Log.e("Error", e.getMessage(), e);
-                }
+            if(extras.getSerializable("CONTACT_OBJECT") != null){
+                Contact contact = (Contact) extras.getSerializable("CONTACT_OBJECT");
+                setFormData(contact);
             }
         }
     }
@@ -69,23 +63,25 @@ public class ContactDetailActivity extends PetagramActivity {
     public void initComponents() {
         super.initComponents();
 
-        textViewName = (TextView) findViewById(R.id.tv_cd_name);
-        textViewPhone = (TextView) findViewById(R.id.tv_cd_phone);
-        textViewEmail = (TextView) findViewById(R.id.tv_cd_email);
-        textViewBirthDate = (TextView) findViewById(R.id.tv_cd_birth_date);
-        textViewSex = (TextView) findViewById(R.id.tv_cd_sex);
-        textViewAddress = (TextView) findViewById(R.id.tv_cd_address);
-        imgContactProfile = (ImageView)findViewById(R.id.img_cd_profile);
+        textViewName = findViewById(R.id.tv_cd_name);
+        textViewPhone = findViewById(R.id.tv_cd_phone);
+        textViewEmail = findViewById(R.id.tv_cd_email);
+        textViewBirthDate = findViewById(R.id.tv_cd_birth_date);
+        textViewSex = findViewById(R.id.tv_cd_sex);
+        textViewAddress = findViewById(R.id.tv_cd_address);
+        imgContactProfile = findViewById(R.id.img_cd_profile);
         registerForContextMenu(imgContactProfile); //Enable context menu in image view
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        actionBar = findViewById(R.id.mainAcionBar);
 
-        rowPhone = (LinearLayout) findViewById(R.id.rowPhone);
-        rowEmail = (LinearLayout) findViewById(R.id.rowEmail);
+        rowPhone = findViewById(R.id.rowPhone);
+        rowEmail = findViewById(R.id.rowEmail);
 
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        actionBar = findViewById(R.id.mainAcionBar);
         setSupportActionBar(actionBar);
         //Set support for previous action bar button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() !=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
     }
 
@@ -120,7 +116,7 @@ public class ContactDetailActivity extends PetagramActivity {
 
     /**
      * Init phone application for call to contact cellphone
-     * @param v
+     * @param v The view
      */
     public void call(View v) {
         String callNumber = textViewPhone.getText().toString();
@@ -128,11 +124,13 @@ public class ContactDetailActivity extends PetagramActivity {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.CALL_PHONE )) {
 
-                showExplanation("Permission Needed", "Rationale",
+                showExplanation(ContactDetailActivity.this,
+                        "Permission Needed", "Rationale",
                         Manifest.permission.CALL_PHONE, PERMISSIONS_REQUEST_CALL);
 
             } else {
-                requestPermission(Manifest.permission.CALL_PHONE,
+                requestPermission(ContactDetailActivity.this,
+                        new String[]{Manifest.permission.CALL_PHONE},
                         PERMISSIONS_REQUEST_CALL);
             }
         }
@@ -148,17 +146,17 @@ public class ContactDetailActivity extends PetagramActivity {
         String email = textViewEmail.getText().toString();
         String[] addressList =  {email}; //Create address list
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.putExtra(Intent.EXTRA_EMAIL, addressList);
-        emailIntent.setType("message/rfc822"); //Set the application type
+        emailIntent.setData(Uri.parse("mailto:"));
+        emailIntent.setType("message/rfc822");
         startActivity(Intent.createChooser(emailIntent, "Email"));
     }
 
     /**
      * Go to Pet List Activity when user touch back button
-     * @param keyCode
-     * @param event
-     * @return
+     * @param keyCode, The key code
+     * @param event, The event information
+     * @return boolean
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -178,23 +176,25 @@ public class ContactDetailActivity extends PetagramActivity {
 
     /**
      * Set object data to form views
-     * @param contact
+     * @param contact, The contact object
      */
     private void setFormData(Contact contact) {
+        if(contact != null) {
+            if (contact.getPhoto() > 0) {
+                imgContactProfile.setImageResource(contact.getPhoto());
+            }
 
-        if(contact.getPhoto() > 0){
-            imgContactProfile.setImageResource(contact.getPhoto());
+            textViewName.setText(contact.getName());
+            textViewBirthDate.setText(new SimpleDateFormat("dd/MM/yyyy",
+                    new Locale("es_CO"))
+                    .format(contact.getBirthDate()));
+            textViewSex.setText("M".equalsIgnoreCase(contact.getSex()) ?
+                    getResources().getString(R.string.man) :
+                    getResources().getString(R.string.woman));
+            textViewPhone.setText(contact.getPhone());
+            textViewEmail.setText(contact.getEmail());
+            textViewAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
         }
-
-        textViewName.setText(contact.getName());
-        textViewBirthDate.setText(new SimpleDateFormat("dd/MM/yyyy")
-                .format(contact.getBirthDate()));
-        textViewSex.setText( "M".equalsIgnoreCase(contact.getSex()) ?
-                getResources().getString(R.string.man) :
-                getResources().getString(R.string.woman));
-        textViewPhone.setText(contact.getPhone());
-        textViewEmail.setText(contact.getEmail());
-        textViewAddress.setText(StringUtils.nvl(contact.getAddress(), ""));
     }
 
     //Using context menu
@@ -244,22 +244,26 @@ public class ContactDetailActivity extends PetagramActivity {
 
     /**
      * Capture activity results
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * @param requestCode, The code of request
+     * @param resultCode, Yhe code of result
+     * @param data, the intent
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode == RESULT_OK){
             switch(requestCode){
                 case PICK_IMAGE: //Pick an image from gallery
-                    imageUri = data.getData();
+                    Uri imageUri = data.getData();
                     imgContactProfile.setImageURI(imageUri);
                     break;
                 case REQUEST_IMAGE_CAPTURE: //Take a photo with camera
                     Bundle extras = data.getExtras();
-                    Bitmap imageBitmap = (Bitmap) extras.get("data");
-                    imgContactProfile.setImageBitmap(imageBitmap);
+                    if(extras != null) {
+                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        imgContactProfile.setImageBitmap(imageBitmap);
+                    }else{
+                       showToast(getResources().getString(R.string.no_photo_taken));
+                    }
                     break;
             }
         }else{

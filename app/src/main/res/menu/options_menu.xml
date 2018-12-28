@@ -16,16 +16,26 @@
         android:icon="@drawable/ic_settings"
         tools:icon="@drawable/ic_settings"></item>
 
+    <item android:id="@+id/mi_contact"
+        android:title="@string/mi_contact"
+        android:orderInCategory="3"
+        android:icon="@drawable/ic_comment"></item>
+
+    <item android:id="@+id/mi_turn_bluetooth"
+        android:title="@string/mi_turn_bluetooth"
+        android:orderInCategory="4"
+        android:icon="@drawable/ic_bluetooth_black_24dp"></item>
+
     <item android:id="@+id/mi_refresh"
         android:title="@string/mi_refresh"
-        android:orderInCategory="3"
+        android:orderInCategory="5"
         app:showAsAction="always"
         android:icon="@drawable/ic_refresh_24dp"></item>
 
 
     <item android:id="@+id/mi_exit"
         android:title="@string/mi_exit"
-        android:orderInCategory="4"
+        android:orderInCategory="6"
         android:icon="@drawable/ic_close_sesion"
         tools:icon="@drawable/ic_close_sesion"></item>
 </menu>

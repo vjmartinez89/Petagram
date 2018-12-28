@@ -5,15 +5,15 @@ public interface IPetragramActivity {
     /**
      * Initialize view components of the activity
      */
-    public void initComponents();
+    void initComponents();
 
     /**
      * Initialize the activity adapters
      */
-    public void initAdapters();
+    void initAdapters();
 
     /**
      * Initialize the activity events
      */
-    public void initEvents();
+    void initEvents();
 }

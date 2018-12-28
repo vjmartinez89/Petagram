@@ -19,7 +19,7 @@
         android:orientation="vertical"
         android:layout_marginTop="?attr/actionBarSize">
 
-        <com.vjmartinez.petagram.AutoFitRecyclerView
+        <com.vjmartinez.petagram.utils.AutoFitRecyclerView
             android:id="@+id/rv_menu_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

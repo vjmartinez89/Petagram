@@ -4,10 +4,15 @@
 
     <!-- Permission for use call phone -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- Permission for use camera -->
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -30,7 +35,9 @@
         <activity android:name=".SignInStep1Activity" />
         <activity android:name=".SignInConfirmationActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".ContactActivity" />
+        <activity android:name=".FormFileActivity"></activity>
     </application>
 
 </manifest>

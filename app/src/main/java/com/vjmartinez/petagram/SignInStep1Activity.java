@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,13 +14,13 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.json.JSONException;
+import com.vjmartinez.petagram.dto.Contact;
+import com.vjmartinez.petagram.utils.MessageUtil;
+import com.vjmartinez.petagram.utils.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class SignInStep1Activity extends PetagramActivity {
 
@@ -41,27 +40,16 @@ public class SignInStep1Activity extends PetagramActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in_step1);
-
+        this.setTitle(R.string.sis1_tittle);
         init();
-
         Bundle extras = getIntent().getExtras();
         if (extras != null && !extras.isEmpty()) {
-
-            if (extras != null && !extras.isEmpty()) {
-                if(!StringUtils.isEmpty(extras.getString("CONTACT_OBJECT"))){
-                    try {
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        Contact contact = objectMapper.readValue(extras.getString("CONTACT_OBJECT"),
-                                Contact.class);
-                        setFormData(contact);
-                    }catch(Exception e){
-                        Log.e("Error", e.getMessage(), e);
-                    }
-                }
+            if(extras.getSerializable("CONTACT_OBJECT") != null){
+                Contact contact = (Contact) extras.getSerializable("CONTACT_OBJECT");
+                setFormData(contact);
             }
         }
     }
-
 
     /***
      * Init the basic components of Activity
@@ -69,19 +57,21 @@ public class SignInStep1Activity extends PetagramActivity {
     @Override
     public void initComponents() {
         //Input initialization
-        txiCompleteName = (TextInputEditText)findViewById(R.id.txiCompleteName);
-        txiBirthDate = (TextInputEditText)findViewById(R.id.txiBirthDate);
-        txiPhone = (TextInputEditText)findViewById(R.id.txi_si_phone);
-        txiEmail = (TextInputEditText)findViewById(R.id.txi_si_email);
-        txiContactAddress = (TextInputEditText)findViewById(R.id.txi_si_address);
-        btnSingInNext = (MaterialButton)findViewById(R.id.btn_sing_in_next);
-        rbMan = (RadioButton)findViewById( R.id.radio_man);
-        rbWoman = (RadioButton)findViewById( R.id.radio_woman);
+        txiCompleteName = findViewById(R.id.txiCompleteName);
+        txiBirthDate = findViewById(R.id.txiBirthDate);
+        txiPhone = findViewById(R.id.txi_si_phone);
+        txiEmail = findViewById(R.id.txi_si_email);
+        txiContactAddress = findViewById(R.id.txi_si_address);
+        btnSingInNext = findViewById(R.id.btn_sing_in_next);
+        rbMan = findViewById( R.id.radio_man);
+        rbWoman = findViewById( R.id.radio_woman);
 
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        actionBar = findViewById(R.id.mainAcionBar);
         setSupportActionBar(actionBar);
         //Set support for previous action bar button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -103,7 +93,9 @@ public class SignInStep1Activity extends PetagramActivity {
                 DatePickerDialog dialog = new DatePickerDialog(SignInStep1Activity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         onDateSetListener, year, month, day );
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                if( dialog.getWindow() != null) {
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                }
                 dialog.show();
             }
         });
@@ -116,7 +108,8 @@ public class SignInStep1Activity extends PetagramActivity {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                txiBirthDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(calendar.getTime()));
+                txiBirthDate.setText(new SimpleDateFormat("dd/MM/yyyy",
+                        new Locale("es_CO")).format(calendar.getTime()));
                 txiPhone.requestFocusFromTouch();
             }
         };
@@ -128,13 +121,7 @@ public class SignInStep1Activity extends PetagramActivity {
                 if(validateForm()) {
                     Intent i = new Intent(getBaseContext(), SignInConfirmationActivity.class);
                     Contact contact = getFormData();
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    try {
-                        i.putExtra("CONTACT_OBJECT", objectMapper.writeValueAsString(contact));
-                    }catch(Exception jse){
-                        i.putExtra("CONTACT_OBJECT", "" );
-                        Log.e("Error", jse.getMessage(), jse);
-                    }
+                    i.putExtra("CONTACT_OBJECT", contact);
                     startActivity(i);
                     finish(); //Finish this Activity
                 }
@@ -152,28 +139,29 @@ public class SignInStep1Activity extends PetagramActivity {
 
     /**
      * Set object data to form components
-     * @param contact
+     * @param contact The contact object
      */
     private void setFormData(Contact contact) {
-
-        txiCompleteName.setText(contact.getName());
-        txiBirthDate.setText(new SimpleDateFormat("dd/MM/yyyy")
-                .format(contact.getBirthDate()));
-        if("M".equalsIgnoreCase(contact.getSex())){
-            rbMan.setChecked(true);
-        }else{
-            rbWoman.setChecked(true);
+        if(contact != null) {
+            txiCompleteName.setText(contact.getName());
+            txiBirthDate.setText(new SimpleDateFormat("dd/MM/yyyy",
+                    new Locale("es_CO"))
+                    .format(contact.getBirthDate()));
+            if ("M".equalsIgnoreCase(contact.getSex())) {
+                rbMan.setChecked(true);
+            } else {
+                rbWoman.setChecked(true);
+            }
+            txiPhone.setText(contact.getPhone());
+            txiEmail.setText(contact.getEmail());
+            txiContactAddress.setText(StringUtils.nvl(contact.getAddress(),
+                    ""));
         }
-        txiPhone.setText(contact.getPhone());
-        txiEmail.setText(contact.getEmail());
-        txiContactAddress.setText(StringUtils.nvl(contact.getAddress(),
-                ""));
-
     }
 
     /**
      * Create a Contact object from Form data
-     * @return
+     * @return The contact object
      */
     private Contact getFormData() {
         try {
@@ -182,10 +170,13 @@ public class SignInStep1Activity extends PetagramActivity {
                     txiPhone.getText().toString(),
                     txiEmail.getText().toString(),
                     R.drawable.ic_user_male,
-                    (new SimpleDateFormat("dd/MM/yyyy")).parse(txiBirthDate.getText().toString()),
+                    (new SimpleDateFormat("dd/MM/yyyy", new Locale("es_CO")))
+                            .parse(txiBirthDate.getText().toString()),
                     rbMan.isChecked() ? "M" : "F",
-                    txiContactAddress.getText().toString()
-                    );
+                    txiContactAddress.getText().toString(),
+                    0,
+                    0,
+                    null);
         }catch(Exception e){
             Log.e("Error", e.getMessage(), e);
         }
@@ -197,28 +188,28 @@ public class SignInStep1Activity extends PetagramActivity {
      * @return true: all mandatory fields was filled
      */
     private boolean validateForm(){
-        if(StringUtils.isEmpty(txiCompleteName.getText().toString())){
+        if(StringUtils.isEmpty(txiCompleteName.getText())){
             MessageUtil.showAlertDialog(this,getResources().getString(R.string.validate),
                     getResources().getString(R.string.name_mandatory));
             txiCompleteName.requestFocusFromTouch();
             return false;
         }
 
-        if(StringUtils.isEmpty(txiBirthDate.getText().toString())){
+        if(StringUtils.isEmpty(txiBirthDate.getText())){
             MessageUtil.showAlertDialog(this, getResources().getString(R.string.validate),
                     getResources().getString(R.string.birthday_mandatory));
             txiBirthDate.requestFocusFromTouch();
             return false;
         }
 
-        if(StringUtils.isEmpty(txiPhone.getText().toString())){
+        if(StringUtils.isEmpty(txiPhone.getText())){
             MessageUtil.showAlertDialog(this, getResources().getString(R.string.validate),
                     getResources().getString(R.string.phone_mandatory));
             txiPhone.requestFocusFromTouch();
             return false;
         }
 
-        if(StringUtils.isEmpty(txiEmail.getText().toString())){
+        if(StringUtils.isEmpty(txiEmail.getText())){
             MessageUtil.showAlertDialog(this, getResources().getString(R.string.validate),
                     getResources().getString(R.string.email_mandatory));
             txiEmail.requestFocusFromTouch();
@@ -230,9 +221,9 @@ public class SignInStep1Activity extends PetagramActivity {
 
     /**
      * Go to Main Activity when user touch back button
-     * @param keyCode
-     * @param event
-     * @return
+     * @param keyCode The key code
+     * @param event The event
+     * @return Boolean flag
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

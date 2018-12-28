@@ -8,7 +8,8 @@
     android:id="@+id/mainAcionBar"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    app:titleTextColor="@color/titleColor">
+    app:titleTextColor="@color/titleColor"
+    app:layout_scrollFlags="scroll|enterAlways">
 
 
 </android.support.v7.widget.Toolbar>

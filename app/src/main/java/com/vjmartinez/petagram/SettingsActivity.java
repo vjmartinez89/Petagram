@@ -22,10 +22,12 @@ public class SettingsActivity extends PetagramActivity {
     @Override
     public void initComponents() {
         super.initComponents();
-        actionBar = (Toolbar) findViewById(R.id.mainAcionBar);
+        actionBar = findViewById(R.id.mainAcionBar);
         setSupportActionBar(actionBar);
         //Set support for previous action bar button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     /**
@@ -53,9 +55,9 @@ public class SettingsActivity extends PetagramActivity {
 
     /**
      * Go to Main Activity when user touch back button
-     * @param keyCode
-     * @param event
-     * @return
+     * @param keyCode the key code
+     * @param event the event object
+     * @return boolean flag
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
